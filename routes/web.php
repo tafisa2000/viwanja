@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\pos\CategoryController;
 use App\Http\Controllers\pos\ProjectController;
 use App\Http\Controllers\pos\PlotsController;
+use App\Http\Controllers\pos\ExpenseCategoryController;
 
 
 /*
@@ -69,6 +70,15 @@ Route::middleware('auth')->group(function () {
         // Route::get('/project/edit/{id}', 'ProjectEdit')->name('project.edit');
         Route::get('/plots/delete/{id}', 'PlotsDelete')->name('plots.delete');
         // Route::post('/update/project', 'UpdateProject')->name('project.update');
+    });
+    // Plots All Route
+    Route::controller(ExpenseCategoryController::class)->group(function () {
+        Route::get('/categoryExpense/all', 'CategoryAll')->name('categoryExpense.all');
+        Route::get('/categoryExpense/add', 'CategoryAdd')->name('categoryExpense.add');
+        Route::post('/categoryExpense/store', 'CategoryStore')->name('categoryExpense.store');
+        Route::get('/categoryExpense/edit/{id}', 'CategoryEdit')->name('categoryExpense.edit');
+        Route::post('/categoryExpense/update', 'CategoryUpdate')->name('categoryExpense.update');
+        Route::get('/categoryExpense/delete/{id}', 'CategoryDelete')->name('categoryExpense.delete');
     });
 });
 

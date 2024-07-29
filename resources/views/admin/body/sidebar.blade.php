@@ -52,19 +52,18 @@
                  </li>
 
 
-                 {{-- <li>
+                 <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
                          <i class="mdi mdi-storefront-outline"></i>
 
                          <span>Manage Stock</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
-                         <li><a href="{{ route('stock.report') }}">Stock Report</a></li>
-                         <li><a href="{{ route('stock.supplier.wise') }}">Supplier / Product Wise </a></li>
+                         <li><a href="{{ route('categoryExpense.all') }}">All Category</a></li>
 
                      </ul>
                  </li>
-                 <li>
+                 {{-- <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
                          <i class="fas fa-hand-holding-usd"></i>
 
