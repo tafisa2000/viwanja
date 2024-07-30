@@ -107,7 +107,7 @@ class ExpenseCategoryController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('category.all')->with($notification);
+        return redirect()->route('categoryExpense.all')->with($notification);
     }
 
 

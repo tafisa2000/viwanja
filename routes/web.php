@@ -8,6 +8,7 @@ use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\pos\ProjectController;
 use App\Http\Controllers\pos\PlotsController;
 use App\Http\Controllers\pos\ExpenseCategoryController;
+use App\Http\Controllers\pos\ExpenseController;
 use App\Http\Controllers\Pos\InvoiceController;
 
 /*
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/store/profile', 'storeprofile')->name('store.profile');
         Route::get('/change/password', 'changepassword')->name('change.password');
         Route::post('/update/password', 'updatepassword')->name('update.password');
+        Route::get('/all/user', 'AllUser')->name('all.user');
+        Route::get('/add/user', 'AddUser')->name('user.add');
     });
     // Category All Route
     Route::controller(CategoryController::class)->group(function () {
@@ -115,6 +118,27 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/daily/invoice/report', 'dailyInvoiceReport')->name('daily.invoice.report');
         Route::get('/admin/get/daily/invoice/report', 'getDailyInvoiceReport')->name('get.daily.invoice.report');
     });
+
+    Route::controller(ExpenseController::class)->group(function () {
+        Route::get('/expense/add', 'ExpenseAdd')->name('expense.add');
+        Route::post('/expense/store', 'ExpenseStore')->name('expense.store');
+        // Route::post('/expense/edit', 'ExpenseUpdate')->name('expense.edit');
+        Route::get('/today/expense', 'TodayExpense')->name('today.expense');
+        // Route::get('/edit/expense/{id}', 'EditExpense')->name('edit.expense');
+        Route::get('/edit/expense/{id}', 'DeleteExpense')->name('Expense.delete');
+        Route::get('/expense/category/{id}', 'showCategoryExpense')->name('category.expense');
+        // Route::get('/monthly/expense', 'MonthlyExpense')->name('monthly.expense');
+        // Route::get('/yearly/expense', 'YearlyExpense')->name('yearly.expense');
+        Route::get('/wisely/expense', 'DailyExpense')->name('wisely.expense');
+        Route::post('/daily/expense/pdf', 'DailyExpensePdf')->name('daily.expense.pdf');
+    });
+
+
+
+    // // Add dynamic routes for categories if required
+    // foreach (App\Models\ExpenseCategory::all() as $category) {
+    //     Route::get('/expense/' . $category->name, [ExpenseController::class, 'showCategoryExpense'])->name($category->name . '.expense');
+    // }
 });
 
 require __DIR__ . '/auth.php';
