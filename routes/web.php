@@ -4,10 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\pos\CategoryController;
+use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\pos\ProjectController;
 use App\Http\Controllers\pos\PlotsController;
 use App\Http\Controllers\pos\ExpenseCategoryController;
-
+use App\Http\Controllers\Pos\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,40 @@ Route::middleware('auth')->group(function () {
         Route::get('/categoryExpense/edit/{id}', 'CategoryEdit')->name('categoryExpense.edit');
         Route::post('/categoryExpense/update', 'CategoryUpdate')->name('categoryExpense.update');
         Route::get('/categoryExpense/delete/{id}', 'CategoryDelete')->name('categoryExpense.delete');
+    });
+
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/admin/all/customers', 'allCustomers')->name('all.customers');
+        Route::get('/admin/add/customer', 'addCustomer')->name('add.customer');
+        Route::post('/admin/store/customer', 'storeCustomer')->name('store.customer');
+        Route::get('/admin/edit/customer/{id}', 'editCustomer')->name('edit.customer');
+        Route::post('/admin/update/customer', 'updateCustomer')->name('update.customer');
+        Route::get('/admin/delete/customer/{id}', 'deleteCustomer')->name('delete.customer');
+        Route::get('/admin/credit/customer', 'creditCustomers')->name('credit.customers');
+        Route::get('/admin/customers/purchases', 'customersPurchases')->name('customers.purchases');
+        Route::get('/admin/print/customers/purchases', 'printCustomersPurchases')->name('print.customers.purchases');
+        Route::get('/admin/customer/purchases/{id}', 'customerPurchases')->name('customer.purchases');
+        Route::get('/admin/print/credit/customer', 'printCreditCustomers')->name('print.credit.customers');
+        Route::get('/admin/edit/customer/invoice/{id}', 'editCustomerInvoice')->name('edit.customer.invoice');
+        Route::post('/admin/update/customer/invoice/{invoice_id}', 'updateCustomerInvoice')->name('update.customer.invoice');
+        Route::get('/admin/view/customer/invoice/{invoice_id}', 'viewCustomerInvoice')->name('view.customer.invoice');
+    });
+
+    Route::controller(InvoiceController::class)->group(function () {
+        Route::get('/admin/all/invoices', 'allInvoices')->name('all.invoices');
+        Route::get('/admin/pending/invoices', 'pendingInvoices')->name('pending.invoices');
+        Route::get('/admin/approve/invoice/{id}', 'approveInvoice')->name('approve.invoice');
+        Route::get('/admin/add/invoices', 'addInvoice')->name('add.invoice');
+        Route::post('/admin/store/invoice', 'storeInvoice')->name('store.invoice');
+        Route::get('/admin/delete/invoice/{id}', 'deleteInvoice')->name('delete.invoice');
+        Route::get('/admin/store/approval/{id}', 'storeApproval')->name('store.approval');
+        Route::get('/admin/view/invoice/{id}', 'viewInvoice')->name('view.invoice');
+        Route::get('/admin/get-stock', 'getStock')->name('get-stock');
+        Route::get('/admin/get-product-invoice', 'getProduct')->name('get-product-invoice');
+        Route::get('/admin/get-category-invoice', 'getCategory')->name('get-category-invoice');
+        Route::get('/admin/get-plot-invoice', 'getPlot')->name('get-plot-invoice');
+        Route::get('/admin/daily/invoice/report', 'dailyInvoiceReport')->name('daily.invoice.report');
+        Route::get('/admin/get/daily/invoice/report', 'getDailyInvoiceReport')->name('get.daily.invoice.report');
     });
 });
 
