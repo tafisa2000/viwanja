@@ -93,4 +93,13 @@ class AdminController extends Controller
         }
     } // End Method
 
+    public function AllUser()
+    {
+        $user = User::all();
+        return view('backend.user.allUser', compact('user'));
+    }
+    public function AddUser()
+    {
+        return view('backend.user.addUser');
+    }
 }
