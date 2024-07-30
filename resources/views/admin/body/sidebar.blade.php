@@ -89,7 +89,7 @@
                     </ul>
 
                 </li>
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="fas fa-hand-holding-usd"></i>
 
@@ -101,16 +101,9 @@
                         <li><a href="{{ route('monthly.expense') }}">Monthly Expense </a></li>
                         <li><a href="{{ route('yearly.expense') }}">Yearly Expense </a></li>
                         <li><a href="{{ route('wisely.expense') }}">daily Expense </a></li>
-                        =======
-                        <span>Manage Expense Category</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('categoryExpense.all') }}">All Category</a></li>
-                            <li><a href="{{ route('categoryExpense.add') }}">Add Category</a></li>
 
-                            >>>>>>> 73f0f521f875792cdb215ee58d8f069d52cea42c
-                        </ul>
-                </li>
+
+                </li> --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="fas fa-hand-holding-usd"></i>
