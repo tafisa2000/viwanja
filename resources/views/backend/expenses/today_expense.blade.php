@@ -11,6 +11,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="dropdown mt-4 mt-sm-0">
+                    <a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Filter Expense <i class="mdi mdi-chevron-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        @foreach ($category as $item)
+                            <a class="dropdown-item"
+                                href="{{ route('category.expense', $item->id) }}">{{ $item->name }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <br>
             <!-- end page title -->
             <div class="row">
                 <div class="col-12">
@@ -21,7 +37,7 @@
 
                             <a href="{{ route('expense.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right"><i class="fas fa-ad fas fa-plus-circle"></i>Add Expense</a><br><br>
-                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                            <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>

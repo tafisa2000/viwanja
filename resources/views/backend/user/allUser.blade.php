@@ -26,7 +26,7 @@
                             <a href="{{ route('user.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right"><i class="fas fa-ad  fas fa-plus-circle"></i>Add User
                             </a><br><br>
-                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                            <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>

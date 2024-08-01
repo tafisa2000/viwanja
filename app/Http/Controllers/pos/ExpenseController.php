@@ -46,10 +46,12 @@ class ExpenseController extends Controller
 
     public function TodayExpense()
     {
+        $category
+            = ExpenseCategory::all();
         $date = date('Y-m-d');
         $allExpenses = Expense::latest()->get(); // Fetch today's expenses
         $totalExpense = $allExpenses->sum('amount'); // Calculate the sum of the amounts
-        return view('backend.expenses.today_expense', compact('totalExpense', 'allExpenses'));
+        return view('backend.expenses.today_expense', compact('totalExpense', 'allExpenses', 'category'));
     }
     public function DeleteExpense($id)
     {
@@ -65,8 +67,10 @@ class ExpenseController extends Controller
 
     public function showCategoryExpense($id)
     {
+        $category = ExpenseCategory::all();
+        $expenseCategory = ExpenseCategory::findOrFail($id);
         $expense = Expense::where('category_id', $id)->latest()->get();
-        return view('backend.expenses.category_expense', compact('expense'));
+        return view('backend.expenses.category_expense', compact('expense', 'category', 'expenseCategory'));
     }
     public function DailyExpense()
     {

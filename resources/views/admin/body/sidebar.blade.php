@@ -110,16 +110,10 @@
 
                         <span>Manage Expenses</span>
                     </a>
-                    @php
-                        $category = App\Models\ExpenseCategory::all();
-                    @endphp
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('expense.add') }}">Add Expense</a></li>
                         <li><a href="{{ route('today.expense') }}">All Expense</a></li>
                         <li><a href="{{ route('wisely.expense') }}">Wisely Expense</a></li>
-                        @foreach ($category as $item)
-                            <li><a href="{{ route('category.expense', $item->id) }}">{{ $item->name }}</a></li>
-                        @endforeach
 
                         {{-- <li><a href="{{ route('monthly.expense') }}">Monthly Expense </a></li>
     <li><a href="{{ route('yearly.expense') }}">Yearly Expense </a></li>
