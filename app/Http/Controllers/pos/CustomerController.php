@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\Plot;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -105,6 +106,13 @@ class CustomerController extends Controller
                 $payment->paid_amount += $request->due_amount;
                 $payment->due_amount = '0';
                 $payment_details->current_paid_amount = $request->due_amount;
+
+                $invoice = Invoice::findOrFail($invoice_id);
+                foreach ($invoice->invoiceDetail as $key => $value) {
+                    $plot = Plot::findOrFail($value->plot_id);
+                    $plot->status = 2;
+                    $plot->save();
+                }
             } else if ($request->paid_status == 'partial_paid') {
                 // dd($payment[0]->paid_amount);
                 $payment->paid_amount = $payment->paid_amount + $request->paid_amount;

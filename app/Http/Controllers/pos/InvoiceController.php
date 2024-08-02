@@ -205,9 +205,14 @@ class InvoiceController extends Controller
                 $invoice_details = InvoiceDetail::where('id', $detail->id)->first();
                 $invoice_details->status = '1';
                 $invoice_details->save();
+                $payment = Payment::where('invoice_id', $invoice->id)->first();
                 $product = Plot::where('id', $invoice_details->plot_id)->first();
                 // $nono = (float)($product->quantity) - (float)($val);
-                $product->status = 1;
+                if ($payment->paid_status == 'full_paid') {
+                    $product->status = 2;
+                } else {
+                    $product->status = 1;
+                }
                 $product->save();
                 // if ($nono <= 200)
                 //     Notification::insert([

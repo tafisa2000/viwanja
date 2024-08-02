@@ -39,10 +39,10 @@
                                         <label for="category_id">Category Name</label>
                                         <select name="category_id" id="category_id" class="form-select col-sm-10 select2"
                                             required>
-                                            <option value="">Select Category</option>
-                                            @foreach ($category as $cat)
+                                            <option value="">Select</option>
+                                            {{-- @foreach ($category as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                 </div><br>
@@ -101,5 +101,29 @@
                 },
             });
         });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('change', '#project_id', function() {
+                var project_id = $(this).val();
+                $.ajax({
+                    url: "{{ route('get-category-invoice') }}",
+                    type: 'GET',
+                    data: {
+                        project_id: project_id,
+                    },
+                    success: function(data) {
+                        var html = '<option value="">Select Category</option>';
+                        $.each(data, function(key, v) {
+                            // html += '<option value="' + v.id +
+                            //     '">' + v.name + '(' + v.size + ')' + '</option>'
+                            html += '<option value="' + v.id +
+                                '">' + v.name + '</option>'
+                        });
+                        $('#category_id').html(html);
+                    }
+                })
+            })
+        })
     </script>
 @endsection
