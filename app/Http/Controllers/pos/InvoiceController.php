@@ -25,6 +25,133 @@ class InvoiceController extends Controller
         $invoices = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('backend.invoice.allInvoices', compact('invoices'));
     }
+
+    public function addInvoice()
+    {
+        $invoice_data = Invoice::orderBy('id', 'desc')->first();
+        $invoice_no = '0';
+        if ($invoice_data == null) {
+            $invoice_no += 1;
+        } else {
+            $invoice_no = $invoice_data->invoice_no + 1;
+        }
+        $projects = Project::all();
+        $customers = Customer::all();
+        // $categories = Category::all();
+
+        $date = date("Y-m-d");
+        return view('backend.invoice.addInvoice', compact('projects', 'customers', 'invoice_no', 'date'));
+    }
+
+
+    public function storeInvoice(Request $request)
+    {
+        // dd($request->all());
+        if ($request->customer_id == 'select') {
+            $notification = array(
+                'message' => 'Sorry select Customer',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        } else if ($request->project_id == null) {
+            $notification = array(
+                'message' => 'Sorry Plot Added',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        } else if ($request->paid_status == null) {
+            $notification = array(
+                'message' => 'Sorry Paid status is Required',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        } else if ($request->paid_amount > $request->estimated_amount) {
+            $notification = array(
+                'message' => 'Sorry Paid amount exceed Grand Total',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        } else {
+            // dd($request->all());
+
+            $invoice = new Invoice();
+            $invoice->invoice_no = $request->invoice_no;
+            $invoice->date = date('Y-m-d', strtotime($request->date));
+            $invoice->description = $request->description;
+            $invoice->status = '0';
+            $invoice->customer_id = $request->customer_id;
+            $invoice->total_amount = $request->estimated_amount;
+            // $invoice->region_id = Auth::user()->region_id;
+
+            $invoice->created_by = Auth::user()->id;
+            $invoice->created_at = Carbon::now();
+
+            DB::transaction(function () use ($request, $invoice) {
+                if (($invoice->save())) {
+                    $count_plot = count($request->plot_id);
+                    for ($i = 0; $i < $count_plot; $i++) {
+                        $invoice_details = new InvoiceDetail();
+                        $invoice_details->date = date('Y-m-d', strtotime($request->date));
+                        $invoice_details->invoice_id = $invoice->id;
+                        $invoice_details->category_id = $request->category_id[$i];
+                        $invoice_details->project_id = $request->project_id[$i];
+                        $invoice_details->size = $request->size[$i];
+                        $invoice_details->price = $request->price[$i];
+                        $invoice_details->plot_id = $request->plot_id[$i];
+                        $invoice_details->status = '0';
+                        $invoice_details->created_at = Carbon::now();
+                        $invoice_details->created_by = Auth::user()->id;
+                        $invoice_details->save();
+                    }
+
+                    $payment = new Payment();
+                    $payment_details = new PaymentDetail();
+
+                    $payment->invoice_id = $invoice->id;
+                    $payment->customer_id = $request->customer_id;
+                    // $payment->region_id = Auth::user()->region_id;
+                    $payment->status = 0;
+                    $payment->paid_status = $request->paid_status;
+                    $payment->total_amount = $request->estimated_amount;
+                    if ($request->discount_amount)
+                        $payment->discount_amount = $request->discount_amount;
+                    else
+                        $payment->discount_amount = '0';
+
+                    if ($request->paid_status == 'full_paid') {
+                        $payment->paid_amount = $request->estimated_amount;
+                        $payment->due_amount = '0';
+                        $payment_details->current_paid_amount = $request->estimated_amount;
+                    } else if ($request->paid_status == 'full_due') {
+                        $payment->paid_amount = '0';
+                        $payment->due_amount = $request->estimated_amount;
+                        $payment_details->current_paid_amount = '0';
+                    } else if ($request->paid_status == 'partial_paid') {
+                        $payment->paid_amount = $request->paid_amount;
+                        $payment->due_amount = $request->estimated_amount - $request->paid_amount;
+                        $payment_details->current_paid_amount = $request->paid_amount;
+                    }
+
+                    $payment->save();
+
+                    $payment_details->invoice_id = $invoice->id;
+                    $payment_details->date = date('Y-m-d', strtotime($request->date));
+                    $payment_details->created_at = Carbon::now();
+                    $payment_details->save();
+                }
+            });
+        }
+        $notification = array(
+            'message' => 'Invoice Data Inserted successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.invoices')->with($notification);
+    }
     public function pendingInvoices()
     {
         $invoices = Invoice::where('status', '0')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
@@ -141,23 +268,6 @@ class InvoiceController extends Controller
         }
         return response()->json($plots);
     }
-
-    public function addInvoice()
-    {
-        $invoice_data = Invoice::orderBy('id', 'desc')->first();
-        $invoice_no = '0';
-        if ($invoice_data == null) {
-            $invoice_no += 1;
-        } else {
-            $invoice_no = $invoice_data->invoice_no + 1;
-        }
-        $projects = Project::all();
-        $customers = Customer::all();
-        // $categories = Category::all();
-
-        $date = date("Y-m-d");
-        return view('backend.invoice.addInvoice', compact('projects', 'customers', 'invoice_no', 'date'));
-    }
     public function getProduct(Request $request)
     {
 
@@ -170,113 +280,5 @@ class InvoiceController extends Controller
         $stock = Plot::select('quantity')->where('region_id', Auth::user()->region_id)->where('id', $request->product_id)->get();
         // dd($stock);
         return response()->json($stock);
-    }
-    public function storeInvoice(Request $request)
-    {
-        // dd($request->all());
-        if ($request->customer_id == 'select') {
-            $notification = array(
-                'message' => 'Sorry select Customer',
-                'alert-type' => 'error'
-            );
-
-            return redirect()->back()->with($notification);
-        } else if ($request->project_id == null) {
-            $notification = array(
-                'message' => 'Sorry Plot Added',
-                'alert-type' => 'error'
-            );
-
-            return redirect()->back()->with($notification);
-        } else if ($request->paid_status == null) {
-            $notification = array(
-                'message' => 'Sorry Paid status is Required',
-                'alert-type' => 'error'
-            );
-
-            return redirect()->back()->with($notification);
-        } else if ($request->paid_amount > $request->estimated_amount) {
-            $notification = array(
-                'message' => 'Sorry Paid amount exceed Grand Total',
-                'alert-type' => 'error'
-            );
-
-            return redirect()->back()->with($notification);
-        } else {
-            // dd($request->all());
-
-            $invoice = new Invoice();
-            $invoice->invoice_no = $request->invoice_no;
-            $invoice->date = date('Y-m-d', strtotime($request->date));
-            $invoice->description = $request->description;
-            $invoice->status = '0';
-            $invoice->customer_id = $request->customer_id;
-            $invoice->total_amount = $request->estimated_amount;
-            // $invoice->region_id = Auth::user()->region_id;
-
-            $invoice->created_by = Auth::user()->id;
-            $invoice->created_at = Carbon::now();
-
-            DB::transaction(function () use ($request, $invoice) {
-                if (($invoice->save())) {
-                    $count_plot = count($request->plot_id);
-                    for ($i = 0; $i < $count_plot; $i++) {
-                        $invoice_details = new InvoiceDetail();
-                        $invoice_details->date = date('Y-m-d', strtotime($request->date));
-                        $invoice_details->invoice_id = $invoice->id;
-                        $invoice_details->category_id = $request->category_id[$i];
-                        $invoice_details->project_id = $request->project_id[$i];
-                        $invoice_details->size = $request->size[$i];
-                        $invoice_details->price = $request->price[$i];
-                        $invoice_details->plot_id = $request->plot_id[$i];
-                        $invoice_details->status = '0';
-                        $invoice_details->created_at = Carbon::now();
-                        $invoice_details->created_by = Auth::user()->id;
-                        $invoice_details->save();
-                    }
-
-                    $payment = new Payment();
-                    $payment_details = new PaymentDetail();
-
-                    $payment->invoice_id = $invoice->id;
-                    $payment->customer_id = $request->customer_id;
-                    // $payment->region_id = Auth::user()->region_id;
-                    $payment->status = 0;
-                    $payment->paid_status = $request->paid_status;
-                    $payment->total_amount = $request->estimated_amount;
-                    if ($request->discount_amount)
-                        $payment->discount_amount = $request->discount_amount;
-                    else
-                        $payment->discount_amount = '0';
-
-                    if ($request->paid_status == 'full_paid') {
-                        $payment->paid_amount = $request->estimated_amount;
-                        $payment->due_amount = '0';
-                        $payment_details->current_paid_amount = $request->estimated_amount;
-                    } else if ($request->paid_status == 'full_due') {
-                        $payment->paid_amount = '0';
-                        $payment->due_amount = $request->estimated_amount;
-                        $payment_details->current_paid_amount = '0';
-                    } else if ($request->paid_status == 'partial_paid') {
-                        $payment->paid_amount = $request->paid_amount;
-                        $payment->due_amount = $request->estimated_amount - $request->paid_amount;
-                        $payment_details->current_paid_amount = $request->paid_amount;
-                    }
-
-                    $payment->save();
-
-                    $payment_details->invoice_id = $invoice->id;
-                    $payment_details->date = date('Y-m-d', strtotime($request->date));
-                    $payment_details->created_at = Carbon::now();
-                    $payment_details->save();
-                }
-            });
-        }
-        $notification = array(
-            'message' => 'Invoice Data Inserted successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('all.invoices')->with($notification);
     }
 }

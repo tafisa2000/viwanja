@@ -7,17 +7,34 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">All Expense</h4>
+                        <h4 class="mb-sm-0">All {{ $expenseCategory->name }}</h4>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="dropdown mt-4 mt-sm-0">
+                    <a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Filter Expense <i class="mdi mdi-chevron-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ route('today.expense') }}">All Expense</a>
+                        @foreach ($category as $item)
+                            <a class="dropdown-item"
+                                href="{{ route('category.expense', $item->id) }}">{{ $item->name }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <br>
             <!-- end page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
 
-                            <h4 class="card-title"> Expense All Data </h4>
+                            <h4 class="card-title"> Expense {{ $expenseCategory->name }} Data </h4>
 
                             <a href="{{ route('expense.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right"><i class="fas fa-ad fas fa-plus-circle"></i>Add Expense</a><br><br>
@@ -48,8 +65,9 @@
                                                     class="btn btn-blue rounded-pill waves-effect waves-light">
                                                     <span class="btn btn-warning">Edit</span>
                                                 </a>
-                                                <a href="{{ route('Expense.delete', $item->id) }}" class="btn btn-danger sm"
-                                                    title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i>
+                                                <a href="{{ route('Expense.delete', $item->id) }}"
+                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
+                                                        class="fas fa-trash-alt"></i>
                                                 </a>
 
                                             </td>
