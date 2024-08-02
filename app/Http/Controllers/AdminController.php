@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
 
 class AdminController extends Controller
 {
@@ -101,5 +103,42 @@ class AdminController extends Controller
     public function AddUser()
     {
         return view('backend.user.addUser');
+    }
+
+
+
+    public function StoreUser(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string', 'in:admin,accountant,reception'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'profile_image' => ['nullable', 'image', 'max:2048'], // Validate profile image
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'role' => $request->role,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('upload/admin_images'), $filename);
+            $user->profile_image = $filename;
+            $user->save();
+        }
+
+        $notification = array(
+            'message' => 'User created successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.user')->with($notification);
     }
 }

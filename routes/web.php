@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/password', 'updatepassword')->name('update.password');
         Route::get('/all/user', 'AllUser')->name('all.user');
         Route::get('/add/user', 'AddUser')->name('user.add');
+        Route::post('/store/user', 'StoreUser')->name('user.store');
     });
     // Category All Route
     Route::controller(CategoryController::class)->group(function () {
