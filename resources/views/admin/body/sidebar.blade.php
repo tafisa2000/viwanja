@@ -108,8 +108,17 @@
                         <li><a href="{{ route('all.user') }}">All Users</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Manage Notifications</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.notification') }}">All Notifications</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
-        <!-- Sidebar -->
+        <!-- Sidebar --><!-- Sidebar -->
     </div>
 </div>

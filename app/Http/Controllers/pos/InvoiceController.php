@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Invoice;
@@ -14,12 +15,21 @@ use App\Models\Plot;
 use App\Models\Product;
 use App\Models\Project;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
+
+    protected $notification;
+
+    public function __construct(NotificationController $notification)
+    {
+        $this->notification = $notification;
+    }
+
     public function allInvoices()
     {
         $invoices = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
@@ -28,6 +38,15 @@ class InvoiceController extends Controller
 
     public function addInvoice()
     {
+        // $invoice = Invoice::where('id', 5)->first();
+
+        // try {
+        //     $this->notification->sendSms('new_sale', $invoice);
+        // } catch (Exception $e) {
+        //     return $e->getMessage();
+        // }
+        // $this->notification->sendSms('new_sale', $invoice);
+
         $invoice_data = Invoice::orderBy('id', 'desc')->first();
         $invoice_no = '0';
         if ($invoice_data == null) {
@@ -46,6 +65,7 @@ class InvoiceController extends Controller
 
     public function storeInvoice(Request $request)
     {
+
         // dd($request->all());
         if ($request->customer_id == 'select') {
             $notification = array(
@@ -145,6 +165,9 @@ class InvoiceController extends Controller
                 }
             });
         }
+
+
+
         $notification = array(
             'message' => 'Invoice Data Inserted successfully',
             'alert-type' => 'success'
@@ -229,6 +252,13 @@ class InvoiceController extends Controller
         $payment = Payment::where('invoice_id', $id)->first();
         $payment->status = '1';
         $payment->save();
+
+        // $message  = Notification::where('name', 'new_sale')->first();
+        // $recipients = $invoice->customer->phone;
+        // $customer = $invoice->customer->name;
+        // $amount = $invoice->total_amount;
+
+        $this->notification->sendSms('new_sale', $invoice);
 
 
         $notification = array(

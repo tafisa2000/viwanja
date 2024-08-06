@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\pos\ProjectController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\pos\PlotsController;
 use App\Http\Controllers\pos\ExpenseCategoryController;
 use App\Http\Controllers\pos\ExpenseController;
 use App\Http\Controllers\Pos\InvoiceController;
+use App\Models\Notification;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,8 @@ use App\Http\Controllers\Pos\InvoiceController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/change', [ProfileController::class, 'changeLang'])->name('change');
 
 Route::get('/dashboard', function () {
     return view('admin.index');
@@ -65,6 +70,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/project/edit/{id}', 'ProjectEdit')->name('project.edit');
         Route::get('/project/delete/{id}', 'ProjectDelete')->name('project.delete');
         Route::post('/update/project', 'UpdateProject')->name('project.update');
+    });
+
+    // Nofication All Route
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/all/notification', 'index')->name('all.notification');
+        Route::get('/add/notification', 'create')->name('notification.add');
+        Route::post('/notification/store', 'store')->name('notification.store');
+        Route::get('/notification/edit/{id}', 'edit')->name('notification.edit');
+        Route::get('/notification/delete/{id}', 'delete')->name('notification.delete');
+        Route::post('/update/notification', 'update')->name('notification.update');
     });
     // Plots All Route
     Route::controller(PlotsController::class)->group(function () {

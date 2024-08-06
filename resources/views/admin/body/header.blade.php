@@ -27,12 +27,12 @@
             </button>
 
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            {{-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Search...">
                     <span class="ri-search-line"></span>
                 </div>
-            </form>
+            </form> --}}
 
         </div>
         @php
@@ -40,8 +40,23 @@
             $adminData = App\Models\User::find($id);
         @endphp
 
-
+        <h3>
+            {{ translate('you are welcome') }}
+            {{-- {{ GoogleTranslate::trans('you are welcome', 'fr', null, [
+                'verify' => false,
+            ]) }} --}}
+        </h3>
         <div class="d-flex">
+            <div class=" ">
+                <select name="" id="changeLang">
+                    <option value="en" {{ Session::get('locale') == 'en' ? 'selected' : '' }}>
+                        English</option>
+                    <option value="sw" {{ Session::get('locale') == 'sw' ? 'selected' : '' }}>Swahili</option>
+
+                </select>
+
+
+            </div>
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -79,3 +94,12 @@
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function() {
+        var url = "{{ route('change') }}";
+        $('#changeLang').change(function() {
+            var lang = $(this).val();
+            window.location.href = url + '?lang=' + lang;
+        });
+    });
+</script>
