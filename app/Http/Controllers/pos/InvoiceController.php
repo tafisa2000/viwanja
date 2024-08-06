@@ -262,7 +262,7 @@ class InvoiceController extends Controller
 
     public function getPlot(Request $request)
     {
-        $plots = Plot::where('category_id', $request->category_id)->get();
+        $plots = Plot::where('category_id', $request->category_id)->where('status', 0)->get();
         foreach ($plots as $plot) {
             $plot->price = $plot->category->price  * $plot->size;
         }

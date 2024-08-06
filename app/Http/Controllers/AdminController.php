@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -100,29 +101,43 @@ class AdminController extends Controller
         $user = User::all();
         return view('backend.user.allUser', compact('user'));
     }
+    public function AllRole()
+    {
+        $role = Role::all();
+        return view('backend.user.allRoles', compact('role'));
+    }
     public function AddUser()
     {
-        return view('backend.user.addUser');
+        $roles = Role::all();
+
+        return view('backend.user.addUser', compact('roles'));
+    }
+    public function AddRole()
+    {
+
+        return view('backend.user.addRole');
     }
 
 
 
     public function StoreUser(Request $request)
     {
+        // dd($request);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'string', 'in:admin,accountant,reception'],
+            'role_id' => ['required', 'exists:roles,id'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'profile_image' => ['nullable', 'image', 'max:2048'], // Validate profile image
         ]);
-
+        // dd($request);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
-            'role' => $request->role,
+            'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
         ]);
 
@@ -136,6 +151,78 @@ class AdminController extends Controller
 
         $notification = array(
             'message' => 'User created successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.user')->with($notification);
+    }
+
+    public function StoreRole(Request $request)
+    {
+
+        Role::insert([
+            'name' => $request->name,
+        ]);
+
+        $notification = array(
+            'message' => 'Role is inserted successfuly',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.role')->with($notification);
+    }
+    public function UserEdit($id)
+    {
+        $roles = Role::all(); // Fetch all roles to populate the dropdown
+        $user = User::findOrFail($id); // Fetch the user to be edited
+        return view('backend.user.editUser', compact('user', 'roles'));
+    }
+
+
+    public function DeleteUser($id)
+    {
+        User::findOrFail($id)->delete();
+
+        $notification = array(
+            'message' => 'User is deleted successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function UpdateUser(Request $request, $id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+            'username' => ['required', 'string', 'max:255'],
+            'role_id' => ['required', 'exists:roles,id'],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'profile_image' => ['nullable', 'image', 'max:2048'],
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->username = $request->username;
+        $user->role_id = $request->role_id;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->file('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('upload/admin_images'), $filename);
+            $user->profile_image = $filename;
+        }
+
+        $user->save();
+
+        $notification = array(
+            'message' => 'User updated successfully',
             'alert-type' => 'success'
         );
 

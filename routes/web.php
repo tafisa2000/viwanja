@@ -46,8 +46,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/change/password', 'changepassword')->name('change.password');
         Route::post('/update/password', 'updatepassword')->name('update.password');
         Route::get('/all/user', 'AllUser')->name('all.user');
-        Route::get('/add/user', 'AddUser')->name('user.add');
+        Route::get('/all/role', 'AllRole')->name('all.role');
+        Route::get('/add/user', 'AddUser')->name('add.user');
+        Route::get('/add/role', 'AddRole')->name('role.add');
+        Route::get('/user/delete/{id}', 'DeleteUser')->name('user.delete');
+        Route::get('/user/edit/{id}', 'UserEdit')->name('user.edit');
         Route::post('/store/user', 'StoreUser')->name('user.store');
+        Route::post('/store/role', 'StoreRole')->name('role.store');
+        Route::put('/user/update/{id}', 'UpdateUser')->name('user.update');
     });
     // Category All Route
     Route::controller(CategoryController::class)->group(function () {
@@ -55,6 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/add/category', 'AddCategory')->name('category.add');
         Route::get('/edit/projectCategories/{id}', 'ProjectCategoriesEdit')->name('projectCategories.edit');
         Route::post('/projectCategory/store', 'StoreProjectCategory')->name('projectCategory.store');
+        Route::put('/project-category/update/{id}', 'ProjectCategoriesUpdate')->name('projectCategory.update');
         Route::get('/category/delete/{id}', 'DeleteCategory')->name('category.delete');
     });
 
@@ -74,7 +81,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/plot/store', 'PlotStore')->name('plot.store');
         // Route::get('/project/edit/{id}', 'ProjectEdit')->name('project.edit');
         Route::get('/plots/delete/{id}', 'PlotsDelete')->name('plots.delete');
-        // Route::post('/update/project', 'UpdateProject')->name('project.update');
+        Route::get('/plot/edit/{id}', 'PlotEdit')->name('plot.edit');
+        Route::put('/plot/update/{id}', 'PlotUpdate')->name('plot.update');
     });
     // Plots All Route
     Route::controller(ExpenseCategoryController::class)->group(function () {
@@ -125,13 +133,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/expense/store', 'ExpenseStore')->name('expense.store');
         // Route::post('/expense/edit', 'ExpenseUpdate')->name('expense.edit');
         Route::get('/today/expense', 'TodayExpense')->name('today.expense');
-        // Route::get('/edit/expense/{id}', 'EditExpense')->name('edit.expense');
-        Route::get('/edit/expense/{id}', 'DeleteExpense')->name('Expense.delete');
+        Route::get('/expense/edit/{id}', 'ExpenseEdit')->name('expense.edit');
+        Route::get('/delete/expense/{id}', 'DeleteExpense')->name('Expense.delete');
         Route::get('/expense/category/{id}', 'showCategoryExpense')->name('category.expense');
         // Route::get('/monthly/expense', 'MonthlyExpense')->name('monthly.expense');
         // Route::get('/yearly/expense', 'YearlyExpense')->name('yearly.expense');
         Route::get('/wisely/expense', 'DailyExpense')->name('wisely.expense');
         Route::post('/daily/expense/pdf', 'DailyExpensePdf')->name('daily.expense.pdf');
+        Route::put('/expense/update/{id}', 'ExpenseUpdate')->name('expense.update');
     });
 
 

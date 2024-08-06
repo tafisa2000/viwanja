@@ -6,24 +6,23 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Add Project Category</h4><br><br>
-                            <form method="POST" action="{{ route('projectCategory.store') }}" id="myForm">
+                            <h4 class="card-title">Edit Project Category</h4><br><br>
+                            <form method="POST" action="{{ route('projectCategory.update', $category->id) }}" id="myForm">
                                 @csrf
-                                @if (isset($category))
-                                    <input type="hidden" name="id" value="{{ $category->id }}">
-                                @endif
+                                @method('PUT') <!-- Laravel directive for PUT method -->
+
                                 <div class="row mb-3">
                                     <label for="name" class="col-sm-2 col-form-label">Project Category Name</label>
                                     <div class="col-sm-10 form-group">
                                         <input class="form-control" id="name" name="name" type="text"
-                                            value="{{ $category->name ?? '' }}" required>
+                                            value="{{ old('name', $category->name) }}" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="price" class="col-sm-2 col-form-label">Project Price (in sqm)</label>
                                     <div class="col-sm-10 form-group">
                                         <input class="form-control" id="price" name="price" type="text"
-                                            value="{{ $category->price ?? '' }}" required>
+                                            value="{{ old('price', $category->price) }}" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -31,16 +30,16 @@
                                         <label for="project_id">Project Name</label>
                                         <select name="project_id" id="project_id" class="form-select select2" required>
                                             <option value="">Select Project</option>
-                                            @foreach ($project as $proj)
+                                            @foreach ($projects as $proj)
                                                 <option value="{{ $proj->id }}"
-                                                    {{ isset($category) && $category->project_id == $proj->id ? 'selected' : '' }}>
+                                                    {{ $category->project_id == $proj->id ? 'selected' : '' }}>
                                                     {{ $proj->name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div><br>
-                                <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Category">
+                                <input type="submit" class="btn btn-info waves-effect waves-light" value="Update Category">
                             </form>
                         </div>
                     </div>

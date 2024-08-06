@@ -50,9 +50,34 @@ class CategoryController extends Controller
     public function ProjectCategoriesEdit($id)
     {
         $category = Category::findOrFail($id);
-        $project = Project::findOrFail($category->project_id);
-        return view('backend.category.category_edit', compact('category', 'project'));
-    } // End method
+        $projects = Project::all(); // Fetch all projects to populate the dropdown
+        return view('backend.category.category_edit', compact('category', 'projects'));
+    }
+
+    public function ProjectCategoriesUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric'],
+            'project_id' => ['required', 'exists:projects,id'],
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->price = $request->price;
+        $category->project_id = $request->project_id;
+
+        $category->save();
+
+        $notification = array(
+            'message' => 'Category updated successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.category')->with($notification);
+    }
+
+
 
 
     public function DeleteCategory($id)

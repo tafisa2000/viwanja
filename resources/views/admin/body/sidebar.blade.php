@@ -106,6 +106,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.user') }}">All Users</a></li>
+                        <li><a href="{{ route('all.role') }}">All Roles</a></li>
                     </ul>
                 </li>
             </ul>

@@ -21,6 +21,12 @@ class ExpenseController extends Controller
         return view('backend.expenses.expense_add', compact('date', 'category'));
     }
 
+    public function ExpenseEdit($id)
+    {
+        $expense = Expense::findOrFail($id);
+        $category = ExpenseCategory::all();  // Fetch all categories
+        return view('backend.expenses.expense_edit', compact('expense', 'category'));
+    }
 
     public function ExpenseStore(Request $request)
     {
@@ -99,5 +105,30 @@ class ExpenseController extends Controller
         $end_date = date('d-m-Y', strtotime($request->end_date));
 
         return view('backend.expenses.daily_expense_report_pdf', compact('allData', 'start_date', 'end_date'));
+    }
+
+    public function ExpenseUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'date' => ['required', 'date'],
+            'details' => ['required', 'string', 'max:255'],
+            'amount' => ['required', 'numeric'],
+            'category_id' => ['required', 'exists:expense_categories,id'],
+        ]);
+
+        $expense = Expense::findOrFail($id);
+        $expense->date = $request->date;
+        $expense->details = $request->details;
+        $expense->amount = $request->amount;
+        $expense->category_id = $request->category_id;
+
+        $expense->save();
+
+        $notification = array(
+            'message' => 'Expense updated successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('today.expense')->with($notification);
     }
 }
