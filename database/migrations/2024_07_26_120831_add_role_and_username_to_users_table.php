@@ -12,19 +12,25 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user'); // Add the role column
-            $table->string('username')->unique()->nullable();; // Add the username column
-            $table->string('profile_image')->nullable(); // Add the profile_image column
+            // Drop the existing role column
+            $table->dropColumn('role');
+            // Add other columns if they are not already in the table
+            if (!Schema::hasColumn('users', 'username')) {
+                $table->string('username')->unique()->nullable();
+            }
+            if (!Schema::hasColumn('users', 'profile_image')) {
+                $table->string('profile_image')->nullable();
+            }
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+            // Revert changes
+            $table->string('role')->default('user');
             $table->dropColumn('username');
             $table->dropColumn('profile_image');
         });

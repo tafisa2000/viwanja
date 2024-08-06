@@ -59,4 +59,37 @@ class PlotsController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function PlotEdit($id)
+    {
+        $plot = Plot::findOrFail($id); // Fetch the plot to be edited
+        $projects = Project::all(); // Fetch all projects to populate the dropdown
+        $categories = Category::all(); // Fetch all categories to populate the dropdown
+        return view('backend.plots.editPlot', compact('plot', 'projects', 'categories'));
+    }
+
+    public function PlotUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'size' => ['required', 'numeric'],
+            'project_id' => ['required', 'exists:projects,id'],
+            'category_id' => ['required', 'exists:categories,id'],
+        ]);
+
+        $plot = Plot::findOrFail($id);
+        $plot->name = $request->name;
+        $plot->size = $request->size;
+        $plot->project_id = $request->project_id;
+        $plot->category_id = $request->category_id;
+
+        $plot->save();
+
+        $notification = array(
+            'message' => 'Plot updated successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.plots')->with($notification);
+    }
 }

@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Project Category All</h4>
+                        <h4 class="mb-sm-0">All Roles</h4>
 
 
 
@@ -21,9 +21,9 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h4 class="card-title"> All Project Category</h4>
+                            <h4 class="card-title"> All Roles</h4>
 
-                            <a href="{{ route('add.user') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
+                            <a href="{{ route('role.add') }}" class="btn btn-dark btn-rounded waves-effect waves-light"
                                 style="float:right"><i class="fas fa-ad  fas fa-plus-circle"></i>Add User
                             </a><br><br>
                             <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap"
@@ -32,8 +32,6 @@
                                     <tr>
                                         <th width="5%">Sl</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
                                         <th width="20%">Action</th>
 
                                 </thead>
@@ -41,23 +39,20 @@
 
                                 <tbody>
 
-                                    @foreach ($user as $key => $item)
+                                    @foreach ($role as $key => $item)
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item->email }} </td>
-                                            <td> {{ $item->role->name }} </td>
-
-
                                             <td>
-                                                <a href="{{ route('user.edit', $item->id) }}" class="btn btn-info sm"
-                                                    title="Edit Data">
+                                                <a href="{{ route('projectCategories.edit', $item->id) }}"
+                                                    class="btn btn-info sm" title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('user.delete', $item->id) }}" class="btn btn-danger sm"
-                                                    title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i>
-                                                </a>
 
+                                                <a href="{{ route('category.delete', $item->id) }}"
+                                                    class="btn btn-danger sm" title="Delete Data" id="delete"> <i
+                                                        class="fas fa-trash-alt"></i>
+                                                </a>
 
                                             </td>
 

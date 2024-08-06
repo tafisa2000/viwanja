@@ -59,8 +59,8 @@
                                             <td>{{ optional($item->category)->name ?? 'N/A' }}</td>
                                             <td>{{ $item->date }}</td>
                                             <td>
-                                                {{-- {{ route('edit.expense', $item->id) }} --}}
-                                                <a href=""
+
+                                                <a href=" {{ route('expense.edit', $item->id) }}"
                                                     class="btn btn-blue rounded-pill waves-effect waves-light">
                                                     <span class="btn btn-warning">Edit</span>
                                                 </a>

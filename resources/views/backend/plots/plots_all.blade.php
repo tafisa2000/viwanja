@@ -66,7 +66,7 @@
 
 
                                             <td>
-                                                <a href="{{ route('project.edit', $item->id) }}" class="btn btn-info sm"
+                                                <a href="{{ route('plot.edit', $item->id) }}" class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
