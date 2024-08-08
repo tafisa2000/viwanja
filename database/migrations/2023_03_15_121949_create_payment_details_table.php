@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('current_paid_amount');
             $table->date('date');
             $table->integer('updated_by')->nullable();
-
+            $table->string('method');
             $table->timestamps();
         });
     }

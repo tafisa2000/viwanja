@@ -226,13 +226,25 @@
                                         <input type="number" name="paid_amount" class="hidden form-control paid_amount"
                                             placeholder="Enter Paid Amount" style="display: none">
                                     </div>
-                                </div>
 
-                                <div class="flex justify-end form-group">
-                                    <button type="submit" class="btn btn-dark btn-rounded waves-effect waves-light"
-                                        style="float:right">Add
-                                        Invoice</button>
-                                </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="">Payment Method</label>
+                                        <select name="payment_method" id="payment_method" class="form-select">
+                                            <option value="">select</option>
+                                            <option value="cash">Cash</option>
+                                            <option value="check">Check</option>
+                                            <option value="card">Card</option>
+                                        </select>
+
+                                    </div>
+
+
+
+                                    <div class="flex justify-end form-group">
+                                        <button type="submit" class="btn btn-dark btn-rounded waves-effect waves-light"
+                                            style="float:right">Add
+                                            Invoice</button>
+                                    </div>
                             </form>
                         </div>
 
@@ -297,7 +309,6 @@
 
         </td>
         <td >
-
             <i class = "btn btn-danger btn-sm fas fa-window-close removeeventmore" > </i>
                 </td >
             </tr>
@@ -326,6 +337,7 @@
                 name = $('#name').find('option:selected').text();
                 size = parseFloat(size);
                 price = parseFloat(price);
+                // price = new Intl.NumberFormat('en-US').format(price)
                 // console.log(size);
 
                 if (!parseFloat(invoice_no)) {

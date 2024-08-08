@@ -164,6 +164,7 @@ class InvoiceController extends Controller
                     $payment->save();
 
                     $payment_details->invoice_id = $invoice->id;
+                    $payment_details->method = $request->payment_method;
                     $payment_details->date = date('Y-m-d', strtotime($request->date));
                     $payment_details->created_at = Carbon::now();
                     $payment_details->save();
@@ -180,16 +181,19 @@ class InvoiceController extends Controller
 
         return redirect()->route('all.invoices')->with($notification);
     }
+
     public function pendingInvoices()
     {
         $invoices = Invoice::where('status', '0')->orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('backend.invoice.pendingInvoices', compact('invoices'));
     }
+
     public function approveInvoice($id)
     {
         $invoice = Invoice::findOrFail($id);
         return view('backend.invoice.approveInvoices', compact('invoice'));
     }
+
     public function viewInvoice($id)
     {
         $invoice = Invoice::findOrFail($id);
@@ -289,6 +293,7 @@ class InvoiceController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
     public function getCategory(Request $request)
     {
         $categories = Category::where('project_id', $request->project_id)->get();
@@ -297,18 +302,19 @@ class InvoiceController extends Controller
 
     public function getPlot(Request $request)
     {
-        $plots = Plot::where('category_id', $request->category_id)->where('status', 0)->get();
+        $plots = Plot::where('category_id', $request->category_id)->get();
         foreach ($plots as $plot) {
             $plot->price = $plot->category->price  * $plot->size;
         }
         return response()->json($plots);
     }
+
     public function getProduct(Request $request)
     {
-
         $products = Plot::where('category_id', $request->category_id)->get();
         return response()->json($products);
     }
+
     public function getStock(Request $request)
     {
 

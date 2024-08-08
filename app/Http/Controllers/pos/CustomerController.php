@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Invoice;
@@ -22,6 +23,14 @@ class CustomerController extends Controller
     //     return $this->middleware(['auth']);
     // }
     //
+
+    protected $notification;
+
+    public function __construct(NotificationController $notification)
+    {
+        $this->notification = $notification;
+    }
+
     public function allCustomers()
     {
         $customers = Customer::all();
@@ -120,8 +129,11 @@ class CustomerController extends Controller
                 $payment_details->current_paid_amount = $request->paid_amount;
             }
 
+            $payment_details->method = $request->payment_method;
             $payment->save();
             $payment_details->save();
+
+            $this->notification->sendSms('payment_receipt', $payment->invoice);
 
             $notification = array(
                 'message' => 'Customer Invoice Updated Successfully',
