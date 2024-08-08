@@ -21,7 +21,7 @@
                                 <div class="row mb-3">
                                     <label for="size" class="col-sm-2 col-form-label">Plot Size</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="size" name="size" type="text" required
+                                        <input class="form-control" id="size" name="size" type="number" required
                                             value="{{ old('size', $plot->size) }}">
                                     </div>
                                 </div>
@@ -127,7 +127,8 @@
                         });
                         $('#category_id').html(html);
                         $('#category_id').val(
-                        "{{ old('category_id', $plot->category_id) }}"); // Set the selected category if it was previously selected
+                            "{{ old('category_id', $plot->category_id) }}"
+                            ); // Set the selected category if it was previously selected
                     }
                 })
             });

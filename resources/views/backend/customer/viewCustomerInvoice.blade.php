@@ -5,282 +5,219 @@
     <div class="page-content">
         <div class="container-fluid">
 
-            <!-- start page title -->
-            <div class="row">
+            <!-- Start Page Title -->
+
+            <!-- End Page Title -->
+
+            <!-- Invoice Card -->
+            <div class="row ">
                 <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Invoice</h4>
+                    <div class="" style="background-color: white">
+                        <div class="card-body">
+                            <!-- Invoice Header -->
+                            <div class="d-flex justify-content-between mb-4">
+                                <div>
+                                    <h3 style="color:black;text-align:start;font-size: 20px; margin-top: 10px; ">
+                                        <strong> J.J.MKENYE & SONS <br> <span> </span> COMPANY LTD
+                                    </h3> </strong>
+                                    <address class="text-muted">
+                                        Kigamboni Gezaulole,<br> Dar-es-Salaam, Tanzania.<br>
+                                        johnmkenye1980@gmail.com <br>
+                                        Phone : 0685202861
+                                    </address>
+                                </div>
+                                <div class="text-end">
+                                    <h4><strong>Invoice No #{{ $invoice->invoice_no }}</strong></h4>
+                                    <address class="text-muted">
+                                        <strong>Invoice Date:</strong> {{ date('d-m-Y', strtotime($invoice->date)) }}
+                                    </address>
+                                </div>
+                            </div>
+                            <!-- End Invoice Header -->
 
-                        <a href="{{ route('credit.customers') }}"
-                            class="justify-center inline-block float-right px-3 py-2 font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800"><i
-                                class="fas fa-arrow-left"></i> Back</a>
+                            <!-- Customer Information -->
+                            <div class="border p-3 mb-4">
+                                <h5 class="mb-3"><strong>Customer Info</strong></h5>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p>Name: <strong>{{ $invoice->payment->customer->name }}</strong></p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>Mobile: <strong>{{ $invoice->payment->customer->mobile_no }}</strong></p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>Email: <strong>{{ $invoice->payment->customer->email }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Customer Information -->
 
+                            <!-- Invoice Details -->
+                            <div class="table-responsive mb-4">
+                                <table class="table table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center">Sl</th>
+                                            <th class="text-center">Project Name</th>
+                                            <th class="text-center">Plot Number</th>
+                                            <th class="text-center">Size (Sqm)</th>
+                                            <th class="text-center">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php $total_sum = 0; @endphp
+                                        @foreach ($invoice->invoiceDetail as $key => $details)
+                                            <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
+                                                <td class="text-center">{{ $details->project->name }}</td>
+                                                <td class="text-center">{{ $details->plot->name }}</td>
+                                                <td class="text-center">{{ number_format($details->size) }}</td>
+                                                <td class="text-center">{{ number_format($details->price) }}</td>
+                                            </tr>
+                                            @php $total_sum += $details->price; @endphp
+                                        @endforeach
+                                        <!-- Subtotals and Summary -->
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-end"><strong>Sub Total</strong></td>
+                                            <td class="text-center">{{ number_format($total_sum) }}</td>
+                                        </tr>
+                                        @if ($invoice->payment->discount_amount)
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-end"><strong>Discount</strong></td>
+                                                <td class="text-center">
+                                                    {{ number_format($invoice->payment->discount_amount) }}</td>
+                                            </tr>
+                                        @endif
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-end"><strong>Paid Amount</strong></td>
+                                            <td class="text-center">{{ number_format($invoice->payment->paid_amount) }}
+                                            </td>
+                                        </tr>
+                                        @if ($invoice->payment->due_amount)
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-end"><strong>Due Amount</strong></td>
+                                                <td class="text-center">{{ number_format($invoice->payment->due_amount) }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-end">
+                                                <h5><strong>Grand Total</strong></h5>
+                                            </td>
+                                            <td class="text-center">
+                                                <h5><strong>Tsh
+                                                        {{ number_format($invoice->payment->total_amount, 2) }}</strong>
+                                                </h5>
+                                            </td>
+                                        </tr>
+                                        <!-- Payment Summary -->
+                                        <tr>
+                                            <td colspan="6" class="text-center text-uppercase bg-light"><strong>Payment
+                                                    Summary</strong></td>
+                                        </tr>
+                                        <tr class="bg-light">
+                                            <td colspan="3"></td>
+                                            <td class="text-center"><strong>Date</strong></td>
+                                            <td class="text-center"><strong>Amount</strong></td>
+                                        </tr>
+                                        @foreach ($invoice->paymentDetail as $key => $item)
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-center">{{ date('d-m-Y', strtotime($item->date)) }}</td>
+                                                <td class="text-center">{{ number_format($item->current_paid_amount) }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- End Invoice Details -->
+
+                            <!-- Print Time and Buttons -->
+                            <div class="d-flex justify-content-between">
+                                @php $date = new DateTime('now', new DateTimeZone('Africa/Nairobi')); @endphp
+                                <p class="text-muted"><i>Print Time: {{ $date->format('F j, Y, g:i a') }}</i></p>
+                                <div class="no-print">
+                                    <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i>
+                                        Print</a>
+                                    <a href="#" class="btn btn-primary ms-2">Send</a>
+                                </div>
+                            </div>
+                            <!-- End Print Time and Buttons -->
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- end page title -->
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="invoice-title">
-                                        <h4 class="float-end font-size-16"><strong>Invoice No
-                                                #{{ $invoice->invoice_no }}</strong></h4>
-                                        <h3 class="flex">
-                                            <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
-                                                height="24" width="28" class="mr-2" />Inventory Management System
-                                        </h3>
-                                    </div>
-                                    <hr>
-
-                                    <div class="row">
-                                        <div class=" col-6">
-                                            <address>
-                                                <strong>Inventory Management System</strong><br>
-                                                Ilala, Dar-es-Salaam, Tanzania.<br>
-                                                support@email.com
-                                            </address>
-                                        </div>
-                                        <div class=" col-6 text-end">
-                                            <address>
-                                                <strong>Invoice Date:</strong><br>
-                                                {{ date('d-m-Y', strtotime($invoice->date)) }}<br><br>
-                                            </address>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <form id="myForm" action="{{ route('update.customer.invoice', $invoice->id) }}"
-                                        method="POST">
-                                        @csrf
-                                        <div>
-                                            <div class="p-2">
-                                                <h3 class="font-size-16"><strong>Invoice Details</strong></h3>
-                                            </div>
-                                            <div class="">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <td>
-                                                                    <p>Customer Info</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Name:
-                                                                        <strong>{{ $invoice->payment->customer->name }}</strong>
-                                                                    </p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Mobile:
-                                                                        <strong>{{ $invoice->payment->customer->mobile_no }}</strong>
-                                                                    </p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Email:
-                                                                        <strong>{{ $invoice->payment->customer->email }}</strong>
-                                                                    </p>
-                                                                </td>
-
-                                                            </tr>
-                                                        </thead>
-
-                                                        <thead>
-                                                            <tr>
-
-                                                                <th class="text-center">Sl</th>
-                                                                <th class="text-center">Project Name</th>
-                                                                <th class="text-center">Plot Number</th>
-                                                                <th class="text-center">Size(Sqm)</th>
-                                                                <th class="text-center">Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @php
-                                                                $total_sum = '0';
-                                                            @endphp
-                                                            @foreach ($invoice->invoiceDetail as $key => $details)
-                                                                <tr>
-
-                                                                    <td class="text-center">{{ $key + 1 }}</td>
-                                                                    {{-- <td class="text-center">{{ $details->category->name }}</td> --}}
-                                                                    <td class="text-center">{{ $details->project->name }}
-                                                                    </td>
-                                                                    {{-- <td class="text-center">{{ $details->product->quantity }}</td> --}}
-                                                                    <td class="text-center">{{ $details->plot->name }}</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($details->size) }}</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($details->price) }}</td>
-                                                                </tr>
-                                                                @php
-                                                                    $total_sum += $details->price;
-                                                                @endphp
-                                                            @endforeach
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">Sub Total</td>
-                                                                <td class="text-center">{{ number_format($total_sum) }}
-                                                                </td>
-                                                            </tr>
-                                                            @if ($invoice->payment->discount_amount)
-                                                                <tr>
-                                                                    <td colspan="3"></td>
-                                                                    <td colspan="1">Discount</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($invoice->payment->discount_amount) }}
-                                                                    </td>
-                                                                </tr>
-                                                            @endif
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">Paid Amount</td>
-                                                                <td class="text-center">
-                                                                    {{ number_format($invoice->payment->paid_amount) }}
-                                                                </td>
-                                                            </tr>
-                                                            @if ($invoice->payment->due_amount)
-                                                                <tr>
-                                                                    <td colspan="3"></td>
-                                                                    <td colspan="1">Due Amount</td>
-                                                                    <input type="hidden" name="due_amount"
-                                                                        value="{{ $invoice->payment->due_amount }}">
-                                                                    <td class="text-center">
-                                                                        {{ number_format($invoice->payment->due_amount) }}
-                                                                    </td>
-                                                                </tr>
-                                                            @endif
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">
-                                                                    <h4>Grand Total</h4>
-                                                                </td>
-                                                                <td colspan="2">
-                                                                    <h4>Tsh
-                                                                        {{ number_format($invoice->payment->total_amount, 2) }}
-                                                                    </h4>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="6" class="text-lg font-bold text-center">
-                                                                    Payment Summary
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2"></td>
-                                                                <td class="text-center">Date</td>
-                                                                <td class="text-center">
-                                                                    Amount
-                                                                </td>
-                                                                <td colspan="1"></td>
-                                                            </tr>
-                                                            @foreach ($invoice->paymentDetail as $key => $item)
-                                                                <tr>
-                                                                    <td colspan="2"></td>
-                                                                    <td class="text-center">
-                                                                        {{ date('d-m-Y', strtotime($item->date)) }}</td>
-                                                                    {{-- dd($item->date); --}}
-                                                                    <td class="text-center">
-                                                                        {{ number_format($item->current_paid_amount) }}
-                                                                    </td>
-                                                                    <td colspan="1"></td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                                @php
-                                                    $date = new DateTime('now', new DateTimeZone('Africa/Nairobi'));
-                                                @endphp
-                                                <i>Print Time: {{ $date->format('F j, Y, g:i a') }}</i>
-                                                <div class="d-print-none">
-                                                    <div class="float-end">
-                                                        <a href="javascript:window.print()"
-                                                            class="btn btn-success waves-effect waves-light"><i
-                                                                class="fa fa-print"></i></a>
-                                                        <a href="#"
-                                                            class="btn btn-primary waves-effect waves-light ms-2">Send</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div> <!-- end row -->
-
-                    </div>
-                </div>
-            </div> <!-- end col -->
-        </div> <!-- end row -->
-
-
-
-    </div> <!-- container-fluid -->
+            <!-- End Invoice Card -->
+        </div> <!-- container-fluid -->
     </div>
+
+    <!-- Validation Script -->
     <script type="text/javascript">
         $(document).ready(function() {
             $('#myForm').validate({
                 rules: {
                     paid_status: {
-                        required: true,
+                        required: true
                     },
                     paid_amount: {
-                        required: true,
+                        required: true
                     },
                     date: {
-                        required: true,
+                        required: true
                     },
-
-
                 },
                 messages: {
                     paid_status: {
-                        required: 'Please Select Paid Status',
+                        required: 'Please Select Paid Status'
                     },
                     paid_amount: {
-                        required: 'Please Enter Paid Amount',
+                        required: 'Please Enter Paid Amount'
                     },
                     date: {
-                        required: 'Please select Date',
+                        required: 'Please select Date'
                     },
-
-
                 },
                 errorElement: 'span',
                 errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                highlight: function(element, errorClass, validClass) {
+                highlight: function(element) {
                     $(element).addClass('is-invalid');
                 },
-                unhighlight: function(element, errorClass, validClass) {
+                unhighlight: function(element) {
                     $(element).removeClass('is-invalid');
                 },
             });
         });
     </script>
+
+    <!-- Show/Hide Paid Amount Based on Status -->
     <script type="text/javascript">
         $(function() {
-
             $(document).on('change', '#paid_status', function() {
                 var paid_status = $(this).val();
-                if (paid_status == 'partial_paid') {
+                if (paid_status === 'partial_paid') {
                     $('.paid_amount').show();
-                    console.log(paid_status);
                 } else {
                     $('.paid_amount').hide();
                 }
             });
         })
     </script>
+
+    <!-- Print-Specific CSS -->
+    <style>
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
 @endsection

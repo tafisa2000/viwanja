@@ -4,7 +4,7 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <div class="card">
                         <div class="card-body">
 
@@ -21,13 +21,13 @@
                                 <div class="row mb-3">
                                     <label for="size" class="col-sm-2 col-form-label">Project Size in sqm</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="size" name="size" type="text">
+                                        <input class="form-control" id="size" name="size" type="number">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="cost" class="col-sm-2 col-form-label">Project Cost</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="cost" name="cost" type="text">
+                                        <input class="form-control" id="cost" name="cost" type="number">
                                     </div>
                                 </div>
 

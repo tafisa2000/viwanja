@@ -33,7 +33,7 @@
                                         <th width="5%">Sl</th>
                                         <th>Name</th>
                                         <th>Project</th>
-                                        <th>price</th>
+                                        <th>Square meter price</th>
                                         <th width="20%">Action</th>
 
                                 </thead>
@@ -46,7 +46,7 @@
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
                                             <td> {{ $item['project']['name'] }} </td>
-                                            <td> {{ $item->price }} Tsh/=</td>
+                                            <td> {{ number_format($item->price) }} Tsh/=</td>
 
 
                                             <td>

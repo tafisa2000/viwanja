@@ -4,7 +4,7 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <div class="card">
                         <div class="card-body">
 
@@ -27,7 +27,7 @@
                                     <label for="size" class="col-sm-2 col-form-label">Project Size in sqm</label>
                                     <div class="col-sm-10 form-group">
                                         <input class="form-control" id="size" value="{{ $project->size }}"
-                                            name="size" type="text" required>
+                                            name="size" type="number" required>
                                     </div>
                                 </div>
 
@@ -35,7 +35,7 @@
                                     <label for="cost" class="col-sm-2 col-form-label">Project Cost Tsh</label>
                                     <div class="col-sm-10 form-group">
                                         <input class="form-control" id="cost" value="{{ $project->cost }}"
-                                            name="cost" type="text" required>
+                                            name="cost" type="number" required>
                                     </div>
                                 </div>
 

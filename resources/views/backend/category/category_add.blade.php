@@ -18,7 +18,7 @@
                                 <div class="row mb-3">
                                     <label for="price" class="col-sm-2 col-form-label">Project Price (in sqm)</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="price" name="price" type="text" required>
+                                        <input class="form-control" id="price" name="price" type="number" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">

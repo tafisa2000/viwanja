@@ -25,25 +25,15 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <div class="invoice-title">
-                                <h3>
-                                    <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
-                                        height="24" /> Easy Shopping Mall
-                                </h3>
-                                <hr>
-                            </div>
-
-                            <div class="row mt-4">
-                                <div class="col-6">
-                                    <address>
-                                        <strong>Easy Shopping Mall:</strong><br>
-                                        Purana Palton Dhaka<br>
-                                        support@easylearningbd.com
-                                    </address>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <!-- You can add additional company info here if needed -->
-                                </div>
+                            <div>
+                                <h3 style="color:black;text-align:start;font-size: 20px; margin-top: 10px; ">
+                                    <strong> J.J.MKENYE & SONS <br> <span> </span> COMPANY LTD
+                                </h3> </strong>
+                                <address class="text-muted">
+                                    Kigamboni Gezaulole,<br> Dar-es-Salaam, Tanzania.<br>
+                                    johnmkenye1980@gmail.com <br>
+                                    Phone : 0685202861
+                                </address>
                             </div>
 
                             <div class="row mt-4">

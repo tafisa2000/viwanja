@@ -1,4 +1,45 @@
 <header id="page-topbar">
+    <style>
+        /* Styling for the dropdown container */
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Styling for the select element */
+        .language-select {
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            appearance: none;
+            /* Remove default dropdown icon */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Add a custom arrow icon */
+        .language-dropdown::after {
+            content: '\25BC';
+            /* Downward arrow */
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #333;
+        }
+
+        /* Hover effect */
+        .language-select:hover {
+            background-color: #e9e9e9;
+        }
+    </style>
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
@@ -12,13 +53,16 @@
                     </span>
                 </a>
 
-                <a href="index.html" class="logo logo-light">
-                    <span class="logo-sm">
+                <a href="{{ route('login') }}" class="logo logo-light">
+                    {{-- <span class="logo-sm">
                         <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo-sm-light" height="22">
                     </span>
                     <span class="logo-lg">
                         <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="logo-light" height="20">
-                    </span>
+                    </span> --}}
+                    <h3 style="color:white;text-align:center;font-size: 15px; margin-top: 10px; ">
+
+                        J.J.MKENYE & SONS COMPANY LTD </h3>
                 </a>
             </div>
 
@@ -40,23 +84,14 @@
             $adminData = App\Models\User::find($id);
         @endphp
 
-        <h3>
-            {{ translate('you are welcome') }}
-            {{-- {{ GoogleTranslate::trans('you are welcome', 'fr', null, [
-                'verify' => false,
-            ]) }} --}}
-        </h3>
+
         <div class="d-flex">
-            <div class=" ">
-                <select name="" id="changeLang">
-                    <option value="en" {{ Session::get('locale') == 'en' ? 'selected' : '' }}>
-                        English</option>
+            {{-- <div class="language-dropdown">
+                <select name="" id="changeLang" class="language-select">
+                    <option value="en" {{ Session::get('locale') == 'en' ? 'selected' : '' }}>English</option>
                     <option value="sw" {{ Session::get('locale') == 'sw' ? 'selected' : '' }}>Swahili</option>
-
                 </select>
-
-
-            </div>
+            </div> --}}
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -83,7 +118,8 @@
                     <a class="dropdown-item d-block" href="#"><span
                             class="badge bg-success float-end mt-1">11</span><i
                             class="ri-settings-2-line align-middle me-1"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock
+                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i>
+                        Lock
                         screen</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"><i

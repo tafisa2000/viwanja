@@ -19,7 +19,7 @@
                                 <div class="row mb-3">
                                     <label for="size" class="col-sm-2 col-form-label">Plot Size</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="size" name="size" type="text" required>
+                                        <input class="form-control" id="size" name="size" type="number" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">

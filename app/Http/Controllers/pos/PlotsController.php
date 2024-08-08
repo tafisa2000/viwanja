@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Plot;
+use App\Models\Invoice;
+use App\Models\InvoiceDetail;
+
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -91,5 +94,39 @@ class PlotsController extends Controller
         );
 
         return redirect()->route('all.plots')->with($notification);
+    }
+
+    public function PlotDetails($id)
+    {
+        // Fetch the first matching invoice_detail entry for the given plot_id
+        $invoice_detail = InvoiceDetail::where('plot_id', $id)->first();
+
+        // If no invoice detail is found, handle the error or return a 404 response
+        if (!$invoice_detail) {
+            return redirect()->back()->with('error', 'Invoice detail not found');
+        }
+
+        // Now use the invoice_id from the retrieved invoice_detail to fetch the invoice
+        $invoice = Invoice::findOrFail($invoice_detail->invoice_id);
+
+        // Return the view with the found invoice
+        return view('backend.customer.editCustomerInvoice', compact('invoice'));
+    }
+
+    public function PlotDetailsTaken($id)
+    {
+        // Fetch the first matching invoice_detail entry for the given plot_id
+        $invoice_detail = InvoiceDetail::where('plot_id', $id)->first();
+
+        // If no invoice detail is found, handle the error or return a 404 response
+        if (!$invoice_detail) {
+            return redirect()->back()->with('error', 'Invoice detail not found');
+        }
+
+        // Now use the invoice_id from the retrieved invoice_detail to fetch the invoice
+        $invoice = Invoice::findOrFail($invoice_detail->invoice_id);
+
+        // Return the view with the found invoice
+        return view('backend.customer.viewCustomerInvoice', compact('invoice'));
     }
 }
