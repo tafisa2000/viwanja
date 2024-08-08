@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/admin/all/invoices', 'allInvoices')->name('all.invoices');
+        Route::get('/admin/all/payments', 'allPayment')->name('all.payments');
         Route::get('/admin/pending/invoices', 'pendingInvoices')->name('pending.invoices');
         Route::get('/admin/approve/invoice/{id}', 'approveInvoice')->name('approve.invoice');
         Route::get('/admin/add/invoices', 'addInvoice')->name('add.invoice');

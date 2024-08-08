@@ -63,14 +63,26 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-mail-send-line"></i>
-                        <span>Manage Invoices</span>
+                        <span>Manage Sales</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('all.invoices') }}">All Invoices</a></li>
+                        <li><a href="{{ route('all.invoices') }}">All Sales</a></li>
                         {{-- @if (Auth::user()->role_id == 2) --}}
-                        <li><a href="{{ route('pending.invoices') }}">Approval Invoice</a></li>
+                        <li><a href="{{ route('pending.invoices') }}">Approval Sales</a></li>
                         {{-- @endif --}}
-                        <li><a href="{{ route('daily.invoice.report') }}">Daily Invoice Report</a></li>
+                        <li><a href="{{ route('daily.invoice.report') }}">Daily Sales Report</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-mail-send-line"></i>
+                        <span>Manage Sales</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('all.payments') }}">All Payments</a></li>
+                        {{-- @if (Auth::user()->role_id == 2) --}}
+                        {{-- @endif --}}
+                        <li><a href="{{ route('daily.invoice.report') }}">Daily Sales Report</a></li>
                     </ul>
                 </li>
 

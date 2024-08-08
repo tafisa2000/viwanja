@@ -35,6 +35,11 @@ class InvoiceController extends Controller
         $invoices = Invoice::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
         return view('backend.invoice.allInvoices', compact('invoices'));
     }
+    public function allPayment()
+    {
+        $payments = PaymentDetail::orderBy('date', 'desc')->orderBy('id', 'desc')->get();
+        return view('backend.invoice.allPayments', compact('payments'));
+    }
 
     public function addInvoice()
     {
