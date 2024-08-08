@@ -50,7 +50,7 @@
                                             <td> {{ $item['project']['name'] }}</td>
                                             <td> {{ $item['category']['name'] }}</td>
                                             <td> {{ $item->size }} sqm </td>
-                                            <td> {{ $item['category']['price'] * $item->size }} Tsh/= </td>
+                                            <td> {{ number_format($item['category']['price'] * $item->size) }} Tsh/= </td>
 
                                             <td>
                                                 @if ($item->status == 0)
@@ -74,6 +74,17 @@
                                                 <a href="{{ route('plots.delete', $item->id) }}" class="btn btn-danger sm"
                                                     title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i>
                                                 </a>
+                                                @if ($item->status == 1)
+                                                    <a href="{{ route('plots.detail', $item->id) }}" class="btn btn-dark sm"
+                                                        title="Detail Data" id="detail"> <i class="fas fa-eye"></i>
+                                                    </a>
+                                                @elseif($item->status == 2)
+                                                    <a href="{{ route('plots.detail.taken', $item->id) }}"
+                                                        class="btn btn-dark sm" title="Detail Data" id="detail"> <i
+                                                            class="fas fa-eye"></i>
+                                                    </a>
+                                                @endif
+
 
                                             </td>
 

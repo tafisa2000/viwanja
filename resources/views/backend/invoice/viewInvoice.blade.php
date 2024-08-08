@@ -4,55 +4,32 @@
         <div class="container-fluid">
 
             <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Invoice</h4>
 
-                        <a href="{{ route('all.invoices') }}"
-                            class="justify-center inline-block float-right px-3 py-2 font-semibold text-white bg-blue-900 rounded-lg hover:bg-blue-800"><i
-                                class="fas fa-arrow-left"></i> Back</a>
-
-                    </div>
-                </div>
-            </div>
             <!-- end page title -->
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="" style="background-color: white">
                         <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="invoice-title">
-                                        <h4 class="float-end font-size-16"><strong>Invoice No
-                                                #{{ $invoice->invoice_no }}</strong></h4>
-                                        <h3 class="flex">
-                                            <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo"
-                                                height="24" width="28" class="mr-2" />Inventory Management System
-                                        </h3>
-                                    </div>
-                                    <hr>
-
-                                    <div class="row">
-                                        <div class=" col-6">
-                                            <address>
-                                                <strong>Inventory Management System</strong><br>
-                                                Ilala, Dar-es-Salaam, Tanzania.<br>
-                                                support@email.com
-                                            </address>
-                                        </div>
-                                        <div class=" col-6 text-end">
-                                            <address>
-                                                <strong>Invoice Date:</strong><br>
-                                                {{ date('d-m-Y', strtotime($invoice->date)) }}<br><br>
-                                            </address>
-                                        </div>
-                                    </div>
+                            <div class="d-flex justify-content-between mb-4">
+                                <div>
+                                    <h3 style="color:black;text-align:start;font-size: 20px; margin-top: 10px; ">
+                                        <strong> J.J.MKENYE & SONS <br> <span> </span> COMPANY LTD
+                                    </h3> </strong>
+                                    <address class="text-muted">
+                                        Kigamboni Gezaulole,<br> Dar-es-Salaam, Tanzania.<br>
+                                        johnmkenye1980@gmail.com <br>
+                                        Phone : 0685202861
+                                    </address>
+                                </div>
+                                <div class="text-end">
+                                    <h4><strong>Invoice No #{{ $invoice->invoice_no }}</strong></h4>
+                                    <address class="text-muted">
+                                        <strong>Invoice Date:</strong> {{ date('d-m-Y', strtotime($invoice->date)) }}
+                                    </address>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-12">
                                     <div>
@@ -61,38 +38,35 @@
                                         </div>
                                         <div class="">
                                             <div class="table-responsive">
+                                                <div class="border p-3 mb-4">
+                                                    <h5 class="mb-3"><strong>Customer Info</strong></h5>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <p>Name:
+                                                                <strong>{{ $invoice->payment->customer->name }}</strong>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p>Mobile:
+                                                                <strong>{{ $invoice->payment->customer->mobile_no }}</strong>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p>Email:
+                                                                <strong>{{ $invoice->payment->customer->email }}</strong>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <table class="table">
-                                                    <thead>
+
+
+                                                    <thead class="table-light">
                                                         <tr>
-                                                            <td>
-                                                                <p>Customer Info</p>
-                                                            </td>
-                                                            <td>
-                                                                <p>Name:
-                                                                    <strong>{{ $invoice->payment->customer->name }}</strong>
-                                                                </p>
-                                                            </td>
-                                                            <td>
-                                                                <p>Mobile:
-                                                                    <strong>{{ $invoice->payment->customer->mobile_no }}</strong>
-                                                                </p>
-                                                            </td>
-                                                            <td>
-                                                                <p>Email:
-                                                                    <strong>{{ $invoice->payment->customer->email }}</strong>
-                                                                </p>
-                                                            </td>
-
-                                                        </tr>
-                                                    </thead>
-
-                                                    <thead>
-                                                        <tr>
-
                                                             <th class="text-center">Sl</th>
                                                             <th class="text-center">Project Name</th>
                                                             <th class="text-center">Plot Number</th>
-                                                            <th class="text-center">Size(Sqm)</th>
+                                                            <th class="text-center">Size (Sqm)</th>
                                                             <th class="text-center">Price</th>
                                                         </tr>
                                                     </thead>
@@ -102,16 +76,13 @@
                                                         @endphp
                                                         @foreach ($invoice->invoiceDetail as $key => $details)
                                                             <tr>
-
                                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                                {{-- <td class="text-center">{{ $details->category->name }}</td> --}}
                                                                 <td class="text-center">{{ $details->project->name }}</td>
-                                                                {{-- <td class="text-center">{{ $details->product->quantity }}</td> --}}
                                                                 <td class="text-center">{{ $details->plot->name }}</td>
-                                                                <td class="text-center">
-                                                                    {{ number_format($details->size) }}</td>
-                                                                <td class="text-center">
-                                                                    {{ number_format($details->price) }}</td>
+                                                                <td class="text-center">{{ number_format($details->size) }}
+                                                                </td>
+                                                                <td class="text-center">{{ number_format($details->price) }}
+                                                                </td>
                                                             </tr>
                                                             @php
                                                                 $total_sum += $details->price;
@@ -119,13 +90,13 @@
                                                         @endforeach
                                                         <tr>
                                                             <td colspan="3"></td>
-                                                            <td colspan="1">Sub Total</td>
+                                                            <td class="text-end"><strong>Sub Total</strong></td>
                                                             <td class="text-center">{{ number_format($total_sum) }}</td>
                                                         </tr>
                                                         @if ($invoice->payment->discount_amount)
                                                             <tr>
                                                                 <td colspan="3"></td>
-                                                                <td colspan="1">Discount</td>
+                                                                <td class="text-end"><strong>Discount</strong></td>
                                                                 <td class="text-center">
                                                                     {{ number_format($invoice->payment->discount_amount) }}
                                                                 </td>
@@ -133,27 +104,29 @@
                                                         @endif
                                                         <tr>
                                                             <td colspan="3"></td>
-                                                            <td colspan="1">Paid Amount</td>
+                                                            <td class="text-end"><strong>Paid Amount</strong></td>
                                                             <td class="text-center">
-                                                                {{ number_format($invoice->payment->paid_amount) }}</td>
+                                                                {{ number_format($invoice->payment->paid_amount) }}
+                                                            </td>
                                                         </tr>
                                                         @if ($invoice->payment->due_amount)
                                                             <tr>
                                                                 <td colspan="3"></td>
-                                                                <td colspan="1">Due Amount</td>
+                                                                <td class="text-end"><strong>Due Amount</strong></td>
                                                                 <td class="text-center">
-                                                                    {{ number_format($invoice->payment->due_amount) }}</td>
+                                                                    {{ number_format($invoice->payment->due_amount) }}
+                                                                </td>
                                                             </tr>
                                                         @endif
                                                         <tr>
                                                             <td colspan="3"></td>
-                                                            <td colspan="1">
-                                                                <h4>Grand Total</h4>
+                                                            <td class="text-end">
+                                                                <h5><strong>Grand Total</strong></h5>
                                                             </td>
-                                                            <td colspan="2">
-                                                                <h4>Tsh
-                                                                    {{ number_format($invoice->payment->total_amount, 2) }}
-                                                                </h4>
+                                                            <td class="text-center">
+                                                                <h5><strong>Tsh
+                                                                        {{ number_format($invoice->payment->total_amount, 2) }}</strong>
+                                                                </h5>
                                                             </td>
                                                         </tr>
                                                     </tbody>

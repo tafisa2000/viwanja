@@ -31,8 +31,8 @@
                                     <tr>
                                         <th width="5%">Sl</th>
                                         <th>Name</th>
-                                        <th>Size</th>
-                                        <th>Cost</th>
+                                        <th>Size (sqm)</th>
+                                        <th>Cost (Tsh)</th>
                                         <th width="20%">Action</th>
 
                                 </thead>
@@ -44,8 +44,8 @@
                                         <tr>
                                             <td> {{ $key + 1 }} </td>
                                             <td> {{ $item->name }} </td>
-                                            <td> {{ $item->size }} sqm </td>
-                                            <td> {{ $item->cost }} Tsh/=</td>
+                                            <td> {{ $item->size }} </td>
+                                            <td> {{ number_format($item->cost) }}</td>
 
 
                                             <td>
