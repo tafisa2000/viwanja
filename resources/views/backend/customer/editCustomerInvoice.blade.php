@@ -183,6 +183,16 @@
                                                             class="form-control paid_amount" placeholder="Enter Paid Amount"
                                                             style="display: none;">
                                                     </div>
+                                                    <div class="form-group col-md-3">
+                                                        <label for="">Payment Method</label>
+                                                        <select name="payment_method" class="form-select">
+                                                            <option value="">select</option>
+                                                            <option value="cash">Cash</option>
+                                                            <option value="check">Check</option>
+                                                            <option value="card">Card</option>
+                                                        </select>
+                                                    </div>
+
                                                     <div class="form-group col-md-3 ">
                                                         <div class="md-3">
                                                             <label for="example-text-input" class="form-label">
@@ -243,6 +253,10 @@
                         required: true,
                     },
 
+                    payment_method: {
+                        required: true,
+                    },
+
 
                 },
                 messages: {
@@ -255,8 +269,9 @@
                     date: {
                         required: 'Please select Date',
                     },
-
-
+                    payment_method: {
+                        required: 'Please select Payment Method',
+                    },
                 },
                 errorElement: 'span',
                 errorPlacement: function(error, element) {

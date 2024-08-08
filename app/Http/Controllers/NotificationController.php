@@ -81,18 +81,18 @@ class NotificationController extends Controller
         }
 
         if (strpos($message, '{total_amount}') !== false) {
-            $message = str_replace('{total_amount}', $invoice->total_amount, $message);
+            $message = str_replace('{total_amount}', number_format($invoice->total_amount, 2), $message);
         }
 
         if (strpos($message, '{total_paid}') !== false) {
-            $message = str_replace('{total_paid}', $invoice->payment->paid_amount, $message);
+            $message = str_replace('{total_paid}', number_format($invoice->payment->paid_amount, 2), $message);
         }
 
         if (strpos($message, '{due_amount}') !== false) {
             if ($invoice->payment->due_amount == 0) {
                 $message = str_replace('{due_amount}', ' ', $message);
             } else {
-                $message = str_replace('{due_amount}', 'Remaining with ' . $invoice->payment->due_amount . ' to pay back', $message);
+                $message = str_replace('{due_amount}', 'Remaining with ' . number_format($invoice->payment->due_amount, 2) . ' to pay back', $message);
             }
         }
 
@@ -101,7 +101,7 @@ class NotificationController extends Controller
         }
 
         if (strpos($message, '{paid_amount}') !== false) {
-            $message = str_replace('{paid_amount}', $invoice->paymentDetail[0]->current_paid_amount, $message);
+            $message = str_replace('{paid_amount}', number_format($invoice->paymentDetail[0]->current_paid_amount, 2), $message);
         }
 
         if (strpos($message, '{plot_no}') !== false) {
