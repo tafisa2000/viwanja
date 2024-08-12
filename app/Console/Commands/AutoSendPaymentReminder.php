@@ -46,8 +46,11 @@ class AutoSendPaymentReminder extends Command
         foreach ($payments as $payment) {
 
             if (Carbon::parse($payment->update_at)->diffInDays(Carbon::now()) >= 26) {
+                // if ($payment->id == 6) {
                 try {
                     $this->notification->sendSms('payment_reminder', $payment->invoice);
+
+                    info('sent succeful');
                 } catch (Exception $e) {
                     info('This is and test' . $e->getMessage());
                 }

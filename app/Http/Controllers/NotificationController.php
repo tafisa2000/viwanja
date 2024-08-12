@@ -112,11 +112,11 @@ class NotificationController extends Controller
             $message = str_replace('{plot_no}', $plots, $message);
         }
 
-
+        // $recipients = null;
         // recipients
-        if ($template_name == 'new_sale') {
-            $recipients = [array('recipient_id' => '1', 'dest_addr' => '255' . substr($invoice->customer->mobile_no, 1))];
-        }
+        // if ($template_name == 'new_sale') {
+        $recipients = [array('recipient_id' => '1', 'dest_addr' => '255' . substr($invoice->customer->mobile_no, 1))];
+        // }
 
         // dd($message);
 
@@ -129,6 +129,7 @@ class NotificationController extends Controller
             'message' => $message,
             'recipients' => $recipients
         );
+        info(json_encode($postData));
 
         // dd($postData);
         $this->send($postData);
@@ -154,6 +155,7 @@ class NotificationController extends Controller
         try {
             $response = $client->post($Url, $options);
             // dd($response->getBody());
+            info('imefika hapa');
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
             // dd($e->getMessage());

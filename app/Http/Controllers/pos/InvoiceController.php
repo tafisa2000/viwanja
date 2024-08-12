@@ -71,7 +71,11 @@ class InvoiceController extends Controller
     public function storeInvoice(Request $request)
     {
 
+        $request["paid_amount"] = str_replace(",", "", $request->paid_amount);
+        // $request["estimated_amount"] = str_replace(",", "", $request->estimated_amount);
+        // $request["discount_amount"] = str_replace(",", "", $request->discount_amount);
         // dd($request->all());
+
         if ($request->customer_id == 'select') {
             $notification = array(
                 'message' => 'Sorry select Customer',
@@ -125,7 +129,7 @@ class InvoiceController extends Controller
                         $invoice_details->category_id = $request->category_id[$i];
                         $invoice_details->project_id = $request->project_id[$i];
                         $invoice_details->size = $request->size[$i];
-                        $invoice_details->price = $request->price[$i];
+                        $invoice_details->price = str_replace(",", "", $request->price[$i]);
                         $invoice_details->plot_id = $request->plot_id[$i];
                         $invoice_details->status = '0';
                         $invoice_details->created_at = Carbon::now();

@@ -40,7 +40,7 @@
                                         <th>Invoice No</th>
                                         <th>Date</th>
                                         <th>Amount(Tsh)</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
 
                                 </thead>
 
@@ -54,7 +54,7 @@
                                             <td> #{{ $payment->invoice_id }} </td>
                                             <td> {{ date('d-m-Y', strtotime($payment->date)) }} </td>
                                             <td> {{ number_format($payment->current_paid_amount) }} </td>
-
+                                            {{-- 
                                             <td>
 
                                                 <a href="{{ route('plots.detail.taken', $payment->invoice->id) }}"
@@ -66,7 +66,7 @@
                                                         id="print"> Pending
                                                     </a>
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
                                         </tr>
                                     @endforeach

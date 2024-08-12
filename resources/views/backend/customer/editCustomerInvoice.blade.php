@@ -63,153 +63,9 @@
                                                 <h3 class="font-size-16"><strong>Invoice Details</strong></h3>
                                             </div>
                                             <div class="">
-                                                <div class="table-responsive">
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <td>
-                                                                    <p>Customer Info</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Name:
-                                                                        <strong>{{ $invoice->payment->customer->name }}</strong>
-                                                                    </p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Mobile:
-                                                                        <strong>{{ $invoice->payment->customer->mobile_no }}</strong>
-                                                                    </p>
-                                                                </td>
-                                                                <td>
-                                                                    <p>Email:
-                                                                        <strong>{{ $invoice->payment->customer->email }}</strong>
-                                                                    </p>
-                                                                </td>
+                                                {{--  --}}
 
-                                                            </tr>
-                                                        </thead>
 
-                                                        <thead>
-                                                            <tr>
-
-                                                                <th class="text-center">Sl</th>
-                                                                <th class="text-center">Project Name</th>
-                                                                <th class="text-center">Plot Number</th>
-                                                                <th class="text-center">Size(Sqm)</th>
-                                                                <th class="text-center">Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @php
-                                                                $total_sum = '0';
-                                                            @endphp
-                                                            @foreach ($invoice->invoiceDetail as $key => $details)
-                                                                <tr>
-
-                                                                    <td class="text-center">{{ $key + 1 }}</td>
-                                                                    {{-- <td class="text-center">{{ $details->category->name }}</td> --}}
-                                                                    <td class="text-center">{{ $details->project->name }}
-                                                                    </td>
-                                                                    {{-- <td class="text-center">{{ $details->product->quantity }}</td> --}}
-                                                                    <td class="text-center">{{ $details->plot->name }}</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($details->size) }}</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($details->price) }}</td>
-                                                                </tr>
-                                                                @php
-                                                                    $total_sum += $details->price;
-                                                                @endphp
-                                                            @endforeach
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">Sub Total</td>
-                                                                <td class="text-center">{{ number_format($total_sum) }}
-                                                                </td>
-                                                            </tr>
-                                                            @if ($invoice->payment->discount_amount)
-                                                                <tr>
-                                                                    <td colspan="3"></td>
-                                                                    <td colspan="1">Discount</td>
-                                                                    <td class="text-center">
-                                                                        {{ number_format($invoice->payment->discount_amount) }}
-                                                                    </td>
-                                                                </tr>
-                                                            @endif
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">Paid Amount</td>
-                                                                <td class="text-center">
-                                                                    {{ number_format($invoice->payment->paid_amount) }}
-                                                                </td>
-                                                            </tr>
-                                                            @if ($invoice->payment->due_amount)
-                                                                <tr>
-                                                                    <td colspan="3"></td>
-                                                                    <td colspan="1">Due Amount</td>
-                                                                    <input type="hidden" name="due_amount"
-                                                                        value="{{ $invoice->payment->due_amount }}">
-                                                                    <td class="text-center">
-                                                                        {{ number_format($invoice->payment->due_amount) }}
-                                                                    </td>
-                                                                </tr>
-                                                            @endif
-                                                            <tr>
-                                                                <td colspan="3"></td>
-                                                                <td colspan="1">
-                                                                    <h4>Grand Total</h4>
-                                                                </td>
-                                                                <td colspan="2">
-                                                                    <h4>Tsh
-                                                                        {{ number_format($invoice->payment->total_amount, 2) }}
-                                                                    </h4>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Paid Status</label>
-                                                        <select name="paid_status" id="paid_status" class="form-select">
-                                                            <option value="">select</option>
-                                                            <option value="full_paid">Full Paid</option>
-                                                            <option value="partial_paid">Partial Paid</option>
-                                                        </select>
-                                                        <input type="number" name="paid_amount"
-                                                            class="form-control paid_amount" placeholder="Enter Paid Amount"
-                                                            style="display: none;">
-                                                    </div>
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Payment Method</label>
-                                                        <select name="payment_method" class="form-select">
-                                                            <option value="">select</option>
-                                                            <option value="cash">Cash</option>
-                                                            <option value="check">Check</option>
-                                                            <option value="card">Card</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group col-md-3 ">
-                                                        <div class="md-3">
-                                                            <label for="example-text-input" class="form-label">
-                                                                Date</label>
-                                                            <input name="date" class="form-control example-date-input"
-                                                                type="date" id="date">
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        class=" form-group col-md-3 d-flex flex-column justify-content-end">
-                                                        <div class="md-3">
-                                                            <button type="submit"
-                                                                class="btn btn-dark btn-rounded waves-effect waves-light">Update
-                                                                Invoice </button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
                                                 {{-- <div class="d-print-none">
                                                     <div class="float-end">
                                                         <a href="javascript:window.print()"
@@ -292,9 +148,10 @@
                                                         </tr>
                                                         <!-- Payment Summary -->
                                                         <tr>
-                                                            <td colspan="6"
-                                                                class="text-center text-uppercase bg-light"><strong>Payment
-                                                                    Summary</strong></td>
+                                                            <td colspan="6" class="text-center text-uppercase bg-light">
+                                                                <strong>Payment
+                                                                    Summary</strong>
+                                                            </td>
                                                         </tr>
                                                         <tr class="bg-light">
                                                             <td colspan="2"></td>
@@ -322,16 +179,57 @@
                                             <!-- Print and Send Options -->
                                             <div class="row mt-4">
                                                 <div class="col-md-12 text-end d-print-none">
-                                                    <button type="button" class="btn btn-success"
-                                                        onclick="window.print()">
+                                                    <button type="button" class="btn btn-success" onclick="window.print()">
                                                         <i class="fa fa-print"></i> Print
                                                     </button>
                                                     <button type="button" class="btn btn-primary ms-2">Send</button>
                                                 </div>
                                             </div>
-
+                                            <input type="numbser" style="display: none" name="due_amount"
+                                                value="{{ $invoice->payment->due_amount }}">
                                             <!-- Update Invoice Form (Hidden in Print) -->
-                                            <div class="row mt-4 d-print-none">
+                                            <div class="row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="">Paid Status</label>
+                                                    <select name="paid_status" id="paid_status" class="form-select">
+                                                        <option value="">select</option>
+                                                        <option value="full_paid">Full Paid</option>
+                                                        <option value="partial_paid">Partial Paid</option>
+                                                    </select>
+                                                    <input name="paid_amount" class="form-control input-mask paid_amount"
+                                                        placeholder="Enter Paid Amount" id="input-currency"
+                                                        data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                                                        style="display: none;">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="">Payment Method</label>
+                                                    <select name="payment_method" class="form-select">
+                                                        <option value="">select</option>
+                                                        <option value="cash">Cash</option>
+                                                        <option value="check">Check</option>
+                                                        <option value="card">Card</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group col-md-3 ">
+                                                    <div class="md-3">
+                                                        <label for="example-text-input" class="form-label">
+                                                            Date</label>
+                                                        <input name="date" class="form-control example-date-input"
+                                                            type="date" id="date">
+                                                    </div>
+                                                </div>
+
+                                                <div class=" form-group col-md-3 d-flex flex-column justify-content-end">
+                                                    <div class="md-3">
+                                                        <button type="submit"
+                                                            class="btn btn-dark btn-rounded waves-effect waves-light">Update
+                                                            Invoice </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            {{-- <div class="row mt-4 d-print-none">
                                                 <div class="col-md-4">
                                                     <form id="myForm"
                                                         action="{{ route('update.customer.invoice', $invoice->id) }}"
@@ -360,7 +258,7 @@
                                                             Invoice</button>
                                                     </form>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <!-- Print Time (Hidden in Print) -->
                                             <div class="row mt-4 d-print-none">

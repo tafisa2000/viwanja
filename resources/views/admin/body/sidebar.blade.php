@@ -22,23 +22,16 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.project') }}">All Projects</a></li>
                         <li><a href="{{ route('project.add') }}">Add Project</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-truck-delivery"></i>
-                        <span>Manage Categories</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.category') }}">All Categories</a></li>
                         <li><a href="{{ route('category.add') }}">Add Category</a></li>
                     </ul>
                 </li>
 
+
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-truck-delivery"></i>
+                        <i class="fas fa-map-marked-alt"></i>
                         <span>Manage Plots</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -50,7 +43,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class="fas fa-user-friends"></i>
                         <span>Manage Customers</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -62,7 +55,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
+                        <i class="mdi mdi-currency-usd"></i>
                         <span>Manage Sales</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -75,25 +68,14 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
-                        <span>Manage Sales</span>
+                        <i class=" fas fa-money-bill"></i>
+                        <span>Manage Payments</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.payments') }}">All Payments</a></li>
                         {{-- @if (Auth::user()->role_id == 2) --}}
                         {{-- @endif --}}
-                        <li><a href="{{ route('daily.invoice.report') }}">Daily Sales Report</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="mdi mdi-storefront-outline"></i>
-                        <span>Manage Expense Category</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('categoryExpense.all') }}">All Categories</a></li>
-                        <li><a href="{{ route('categoryExpense.add') }}">Add Category</a></li>
+                        {{-- <li><a href="{{ route('daily.invoice.report') }}">Daily Sales Report</a></li> --}}
                     </ul>
                 </li>
 
@@ -106,6 +88,8 @@
                         <li><a href="{{ route('expense.add') }}">Add Expense</a></li>
                         <li><a href="{{ route('today.expense') }}">All Expense</a></li>
                         <li><a href="{{ route('wisely.expense') }}">Wisely Expense</a></li>
+                        <li><a href="{{ route('categoryExpense.all') }}">All Categories</a></li>
+                        <li><a href="{{ route('categoryExpense.add') }}">Add Category</a></li>
                         {{-- <li><a href="{{ route('monthly.expense') }}">Monthly Expense </a></li>
                         <li><a href="{{ route('yearly.expense') }}">Yearly Expense </a></li>
                         <li><a href="{{ route('wisely.expense') }}">Daily Expense </a></li> --}}
@@ -114,7 +98,7 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="fas fa-hand-holding-usd"></i>
+                        <i class="fas fa-briefcase"></i>
                         <span>Manage User</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -124,7 +108,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="fas fa-hand-holding-usd"></i>
+                        <i class="mdi mdi-email-multiple-outline"></i>
                         <span>Manage Notifications</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">

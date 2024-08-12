@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('sms:auto-send-payment-reminder')->everySecond();
+        $schedule->command('sms:auto-send-payment-reminder')->dailyAt('09:00');
         // $schedule->call(function () {
         //     info('This is a test');
         // })->everyMinute();

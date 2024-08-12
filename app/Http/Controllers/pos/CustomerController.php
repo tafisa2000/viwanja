@@ -91,6 +91,9 @@ class CustomerController extends Controller
 
     public function updateCustomerInvoice(Request $request, $invoice_id)
     {
+        $request["paid_amount"] = str_replace(",", "", $request->paid_amount);
+        // dd($request->due_amount);
+        // dd($request->paid_amount);
         if ($request->due_amount < $request->paid_amount) {
             $notification = array(
                 'message' => 'Paid Amount Exceeds Due Amount',
