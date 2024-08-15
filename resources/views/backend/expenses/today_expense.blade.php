@@ -43,7 +43,7 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Details</th>
-                                        <th>Amount</th>
+                                        <th>Amount (Tsh)</th>
                                         <th>Category</th>
                                         <th>Date</th>
                                         <th>Action</th>
@@ -55,7 +55,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->details }}</td>
-                                            <td>{{ $item->amount }}</td>
+                                            <td>{{ number_format($item->amount) }}</td>
                                             <td>{{ optional($item->category)->name ?? 'N/A' }}</td>
                                             <td>{{ $item->date }}</td>
                                             <td>
@@ -74,7 +74,7 @@
                                 </tbody>
                             </table>
 
-                            <h4>Total Expense : {{ $totalExpense }}</h4>
+                            <h4>Total Expense :Tsh {{ number_format($totalExpense) }}/=</h4>
                         </div>
                     </div>
                 </div> <!-- end col -->

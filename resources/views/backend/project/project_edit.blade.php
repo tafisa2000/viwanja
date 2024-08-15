@@ -34,8 +34,10 @@
                                 <div class="row mb-3">
                                     <label for="cost" class="col-sm-2 col-form-label">Project Cost Tsh</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="cost" value="{{ $project->cost }}"
-                                            name="cost" type="number" required>
+                                        <input class="form-control input-mask" id="cost"
+                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                                            value="{{ number_format($project->cost, 2) }}" name="cost" type="text"
+                                            required>
                                     </div>
                                 </div>
 
@@ -50,6 +52,9 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            // Initialize InputMask
+            $('#cost').inputmask();
+
             $('#myForm').validate({
                 rules: {
                     name: {
