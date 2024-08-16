@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/all/plots', 'AllPlots')->name('all.plots');
         Route::get('/add/plot', 'PlotAdd')->name('plot.add');
         Route::post('/plot/store', 'PlotStore')->name('plot.store');
-        // Route::get('/project/edit/{id}', 'ProjectEdit')->name('project.edit');
+        Route::get('/plot/location', 'plotLocation')->name('plots.locations');
         Route::get('/plots/delete/{id}', 'PlotsDelete')->name('plots.delete');
         Route::get('/plots/detail/{id}', 'PlotDetails')->name('plots.detail');
         Route::get('/plots/detail/taken/{id}', 'PlotDetailsTaken')->name('plots.detail.taken');

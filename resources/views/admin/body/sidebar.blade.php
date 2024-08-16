@@ -36,6 +36,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.plots') }}">All Plots</a></li>
+                        {{-- <li><a href="{{ route('plots.locations') }}">Plots Locations</a></li> --}}
                     </ul>
                 </li>
 

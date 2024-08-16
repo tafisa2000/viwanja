@@ -23,6 +23,13 @@ class PlotsController extends Controller
         $plots = Plot::latest()->get();
         return view('backend.plots.plots_all', compact('plots'));
     }
+
+    public function plotLocation()
+    {
+        $plots = Plot::latest()->get();
+        return view('backend.plots.plots_location', compact('plots'));
+    }
+
     public function PlotAdd()
     {
         $project = Project::all();
@@ -54,13 +61,30 @@ class PlotsController extends Controller
 
     public function PlotsDelete($id)
     {
-        Plot::findOrFail($id)->delete();
-        $notification = array(
-            'message' => 'Project is deleted successfully',
-            'alert-type' => 'success'
-        );
+        try {
+            Plot::findOrFail($id)->delete();
+            $notification = array(
+                'message' => 'Plot is deleted successfully',
+                'alert-type' => 'success'
+            );
 
-        return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+
+            $notification = array(
+                'message' => 'Plot cannot be deleted',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+        // Plot::findOrFail($id)->delete();
+        // $notification = array(
+        //     'message' => 'Project is deleted successfully',
+        //     'alert-type' => 'success'
+        // );
+
+        // return redirect()->back()->with($notification);
     }
 
     public function PlotEdit($id)
