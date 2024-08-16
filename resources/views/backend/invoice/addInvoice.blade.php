@@ -229,19 +229,16 @@
                                             data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
                                             placeholder="Enter Paid Amount" style="display: none">
                                     </div>
-                                    {{-- <div class="mb-0">
-                                        <label class="form-label" for="input-currency">Currency:</label>
-                                        <input id="input-currency" class="form-control input-mask text-left"
-                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'">
-                                        <span class="text-muted">e.g "$ 0.00"</span>
-                                    </div> --}}
+
                                     <div class="form-group col-md-3">
                                         <label for="">Payment Method</label>
                                         <select name="payment_method" id="payment_method" class="form-select">
                                             <option value="">select</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="check">Check</option>
-                                            <option value="card">Card</option>
+                                            @foreach ($paymentMethods as $paymentMethod)
+                                                <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->name }}
+                                                </option>
+                                            @endforeach
+
                                         </select>
 
                                     </div>

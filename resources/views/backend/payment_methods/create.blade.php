@@ -3,53 +3,26 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-8">
+                <div class="col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Add Plot</h4><br><br>
+                            <h4 class="card-title">Add Payment Method</h4><br><br>
 
-                            <form method="POST" action="{{ route('plot.store') }}" id="myForm">
+                            <form method="POST" action="{{ route('payment_methods.store') }}" id="myForm">
                                 @csrf
+
                                 <div class="row mb-3">
-                                    <label for="projectid" class="col-sm-2 col-form-label">Project Name</label>
-                                    <div class="form-group col-sm-10">
-                                        <select name="project_id" id="project_id" class="form-select form-control  select2"
-                                            required>
-                                            <option value="">Select Project</option>
-                                            @foreach ($project as $proj)
-                                                <option value="{{ $proj->id }}">{{ $proj->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="category_id" class="col-sm-2 col-form-label">Category Name</label>
-                                    <div class="form-group col-sm-10">
-                                        <select name="category_id" id="category_id" class="form-select form-control select2"
-                                            required>
-                                            <option value="">Select</option>
-                                            {{-- @foreach ($category as $cat)
-                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                            @endforeach --}}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="name" class="col-sm-2 col-form-label">Plot Name</label>
+                                    <label for="name" class="col-sm-2 col-form-label"> Name</label>
                                     <div class="col-sm-10 form-group">
                                         <input class="form-control" id="name" name="name" type="text" required>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="size" class="col-sm-2 col-form-label">Plot Size</label>
-                                    <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="size" name="size" type="number" required>
-                                    </div>
-                                </div>
+
                                 <br>
                                 <div class="d-flex justify-content-end">
 
-                                    <input type="submit" class="btn btn-dark waves-effect waves-light" value="Add Plot">
+                                    <input type="submit" class="btn btn-dark waves-effect waves-light"
+                                        value="Add Payment Method">
                                 </div>
                             </form>
                         </div>
@@ -79,7 +52,7 @@
                 },
                 messages: {
                     name: {
-                        required: 'Please enter the plot name',
+                        required: 'Please enter the payment method name',
                     },
                     size: {
                         required: 'Please enter the plot size',

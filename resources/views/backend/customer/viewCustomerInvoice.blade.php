@@ -121,16 +121,19 @@
                                                     Summary</strong></td>
                                         </tr>
                                         <tr class="bg-light">
-                                            <td colspan="3"></td>
+                                            <td colspan="2"></td>
                                             <td class="text-center"><strong>Date</strong></td>
                                             <td class="text-center"><strong>Amount</strong></td>
+                                            <td class="text-center"><strong>Method</strong></td>
                                         </tr>
                                         @foreach ($invoice->paymentDetail as $key => $item)
                                             <tr>
-                                                <td colspan="3"></td>
+                                                <td colspan="2"></td>
                                                 <td class="text-center">{{ date('d-m-Y', strtotime($item->date)) }}</td>
                                                 <td class="text-center">{{ number_format($item->current_paid_amount) }}
                                                 </td>
+                                                <td class="text-center">{{ $item->paymentMethod?->name }}</td>
+                                                {{-- </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -145,7 +148,7 @@
                                 <div class="no-print">
                                     <a href="javascript:window.print()" class="btn btn-success"><i class="fa fa-print"></i>
                                         Print</a>
-                                    <a href="#" class="btn btn-primary ms-2">Send</a>
+                                    {{-- <a href="#" class="btn btn-primary ms-2">Send</a> --}}
                                 </div>
                             </div>
                             <!-- End Print Time and Buttons -->

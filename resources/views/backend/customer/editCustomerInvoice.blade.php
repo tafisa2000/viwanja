@@ -168,7 +168,7 @@
                                                                 <td class="text-center">
                                                                     {{ number_format($item->current_paid_amount) }}
                                                                 </td>
-                                                                <td class="text-center">{{ $item->method }}
+                                                                <td class="text-center">{{ $item->paymentMethod?->name }}
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -177,14 +177,14 @@
                                             </div>
                                             <!-- End Invoice Details -->
                                             <!-- Print and Send Options -->
-                                            <div class="row mt-4">
+                                            {{-- <div class="row mt-4">
                                                 <div class="col-md-12 text-end d-print-none">
                                                     <button type="button" class="btn btn-success" onclick="window.print()">
                                                         <i class="fa fa-print"></i> Print
                                                     </button>
                                                     <button type="button" class="btn btn-primary ms-2">Send</button>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <input type="numbser" style="display: none" name="due_amount"
                                                 value="{{ $invoice->payment->due_amount }}">
                                             <!-- Update Invoice Form (Hidden in Print) -->
@@ -205,9 +205,13 @@
                                                     <label for="">Payment Method</label>
                                                     <select name="payment_method" class="form-select">
                                                         <option value="">select</option>
-                                                        <option value="cash">Cash</option>
+                                                        @foreach ($paymentMethods as $paymentMethod)
+                                                            <option value="{{ $paymentMethod->id }}">
+                                                                {{ $paymentMethod->name }}</option>
+                                                        @endforeach
+                                                        {{-- <option value="cash">Cash</option>
                                                         <option value="check">Check</option>
-                                                        <option value="card">Card</option>
+                                                        <option value="card">Card</option> --}}
                                                     </select>
                                                 </div>
 

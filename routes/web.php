@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\pos\CategoryController;
 use App\Http\Controllers\Pos\CustomerController;
 use App\Http\Controllers\pos\ProjectController;
@@ -89,6 +90,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/notification/delete/{id}', 'delete')->name('notification.delete');
         Route::post('/update/notification', 'update')->name('notification.update');
     });
+
+    // payment method All Route
+    Route::controller(PaymentMethodController::class)->group(function () {
+        Route::get('/payment_methods', 'index')->name('payment_methods.index');
+        Route::get('/payment_methods/create', 'create')->name('payment_methods.create');
+        Route::post('/payment_methods', 'store')->name('payment_methods.store');
+        Route::get('/payment_methods/edit/{paymentMethod}', 'edit')->name('payment_methods.edit');
+        Route::put('/payment_methods/{paymentMethod}', 'update')->name('payment_methods.update');
+        Route::get('/payment_methods/{paymentMethod}', 'destroy')->name('payment_methods.destroy');
+    });
+
     // Plots All Route
     Route::controller(PlotsController::class)->group(function () {
         Route::get('/all/plots', 'AllPlots')->name('all.plots');

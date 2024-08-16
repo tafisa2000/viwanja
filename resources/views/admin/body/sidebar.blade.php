@@ -63,6 +63,7 @@
                         <li><a href="{{ route('all.invoices') }}">All Sales</a></li>
                         {{-- @if (Auth::user()->role_id == 2) --}}
                         <li><a href="{{ route('pending.invoices') }}">Approval Sales</a></li>
+                        <li><a href="{{ route('payment_methods.index') }}">Payment Methods</a></li>
                         {{-- @endif --}}
                         <li><a href="{{ route('daily.invoice.report') }}">Daily Sales Report</a></li>
                     </ul>

@@ -11,6 +11,7 @@ use App\Models\InvoiceDetail;
 use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\PaymentMethod;
 use App\Models\Plot;
 use App\Models\Product;
 use App\Models\Project;
@@ -61,10 +62,10 @@ class InvoiceController extends Controller
         }
         $projects = Project::all();
         $customers = Customer::all();
-        // $categories = Category::all();
+        $paymentMethods = PaymentMethod::all();
 
         $date = date("Y-m-d");
-        return view('backend.invoice.addInvoice', compact('projects', 'customers', 'invoice_no', 'date'));
+        return view('backend.invoice.addInvoice', compact('projects', 'customers', 'invoice_no', 'date', 'paymentMethods'));
     }
 
 

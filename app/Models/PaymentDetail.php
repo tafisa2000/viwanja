@@ -14,4 +14,9 @@ class PaymentDetail extends Model
     {
         return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
     }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'method', 'id');
+    }
 }

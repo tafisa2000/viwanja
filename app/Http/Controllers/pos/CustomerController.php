@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\PaymentMethod;
 use App\Models\Plot;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -36,20 +37,26 @@ class CustomerController extends Controller
         $customers = Customer::all();
         return view('backend.customer.allCustomers', compact('customers'));
     }
+
+
     public function addCustomer()
     {
         return view('backend.customer.addCustomer');
     }
+
     public function editCustomer($id)
     {
         $customer = Customer::findOrFail($id);
         return view('backend.customer.editCustomer', compact('customer'));
     }
+
+
     public function creditCustomers()
     {
         $payments = Payment::where('status', 1)->whereIn('paid_status', ['full_due', 'partial_paid'])->get();
         return view('backend.customer.creditCustomers', compact('payments'));
     }
+
     public function customersPurchases()
     {
         $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->where('status', 1)->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
@@ -57,6 +64,8 @@ class CustomerController extends Controller
         // $payments = Payment::where('paid_status', 'full_paid')->orderBy('created_at', 'desc')->orderBy('total_amount', 'desc')->get();
         return view('backend.customer.customersPurchases', compact('payments'));
     }
+
+
     public function printCustomersPurchases()
     {
         $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->where('region_id', Auth::user()->region_id)->where('status', 1)->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
@@ -64,6 +73,7 @@ class CustomerController extends Controller
         // $payments = Payment::where('paid_status', 'full_paid')->orderBy('created_at', 'desc')->orderBy('total_amount', 'desc')->get();
         return view('backend.customer.printCustomersPurchases', compact('payments'));
     }
+
     public function customerPurchases($id)
     {
         // $payments = DB::table('payments')->selectRaw('customer_id, COUNT(customer_id) as no_of_invoices, SUM(total_amount) as total_amount')->groupBy('customer_id')->orderBy('total_amount', 'desc')->get();
@@ -81,8 +91,10 @@ class CustomerController extends Controller
     public function editCustomerInvoice($id)
     {
         $invoice = Invoice::findOrFail($id);
-        return view('backend.customer.editCustomerInvoice', compact('invoice'));
+        $paymentMethods = PaymentMethod::all();
+        return view('backend.customer.editCustomerInvoice', compact('invoice', 'paymentMethods'));
     }
+
     public function viewCustomerInvoice($invoice_id)
     {
         $invoice = Invoice::findOrFail($invoice_id);
