@@ -13,9 +13,9 @@
                                 style="position: absolute; color:red; font-family: Arial, Helvetica, sans-serif; height: 200px; font-size: 12px">
                             </DIV>
 
-                            <script type="text/javascript"
-                                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyYtj82ofEFiAjhYwxi-cjo-1tiZxWJj4"></script>
-                            <script></script>
+                            {{-- <script type="text/javascript"
+                                src="https://maps.googleapis.com/maps/api/js?key="></script>
+                             --}}
                             <script src="{{ asset('geomap.js') }}">
                                 // var locations = <?php print_r(json_encode($plots)); ?>;
                                 // var map = new google.maps.Map(document.getElementById('plots-map'), {
@@ -24,7 +24,7 @@
                                 //     mapTypeId: google.maps.MapTypeId.ROADMAP
                                 // });
 
-                                // var infowindow = new google.maps.InfoWindow();   
+                                // var infowindow = new google.maps.InfoWindow();
 
                                 // var marker, i;
 
