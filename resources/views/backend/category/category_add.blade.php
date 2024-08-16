@@ -18,7 +18,9 @@
                                 <div class="row mb-3">
                                     <label for="price" class="col-sm-2 col-form-label">Project Price (in sqm)</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="price" name="price" type="number" required>
+                                        <input class="form-control input-mask" id="price"
+                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                                            name="price" type="text" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -43,6 +45,9 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            // Initialize InputMask
+            $('#price').inputmask();
+
             $('#myForm').validate({
                 rules: {
                     name: {

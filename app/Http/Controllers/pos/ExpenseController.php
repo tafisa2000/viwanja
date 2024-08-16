@@ -30,16 +30,20 @@ class ExpenseController extends Controller
 
     public function ExpenseStore(Request $request)
     {
+        // Remove commas and convert the amount to a numeric value
+        $amount = str_replace(",", "", $request->amount);
+        $amount = (float) $amount;
+
+        // Insert the expense into the database
         Expense::insert([
             'details' => $request->details,
-            'amount' => $request->amount,
+            'amount' => $amount, // Store the converted amount
             'month' => $request->month,
             'year' => $request->year,
             'date' => $request->date,
             'category_id' => $request->category_id,
             'created_at' => Carbon::now(),
         ]);
-
 
         $notification = array(
             'message' => 'Expense Inserted Successfully',
@@ -106,7 +110,6 @@ class ExpenseController extends Controller
 
         return view('backend.expenses.daily_expense_report_pdf', compact('allData', 'start_date', 'end_date'));
     }
-
     public function ExpenseUpdate(Request $request, $id)
     {
         $request->validate([
@@ -117,9 +120,14 @@ class ExpenseController extends Controller
         ]);
 
         $expense = Expense::findOrFail($id);
+
+        // Remove commas and format the amount correctly
+        $amount = str_replace(",", "", $request->amount);
+        $amount = (float) $amount;
+
         $expense->date = $request->date;
         $expense->details = $request->details;
-        $expense->amount = $request->amount;
+        $expense->amount = $amount;
         $expense->category_id = $request->category_id;
 
         $expense->save();

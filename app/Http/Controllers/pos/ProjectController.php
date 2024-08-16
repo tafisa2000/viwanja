@@ -29,22 +29,25 @@ class ProjectController extends Controller
 
     public function ProjectStore(Request $request)
     {
+        // Remove commas and convert the amount to a numeric value
+        $amount = str_replace(",", "", $request->cost);
+        $amount = (float) $amount;
+
         Project::insert([
             'name' => $request->name,
             'size' => $request->size,
-            'cost' => $request->cost,
+            'cost' => $amount,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
-
         ]);
 
         $notification = array(
-            'message' => 'Project is inserted successfuly',
+            'message' => 'Project is inserted successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->route('all.project')->with($notification);
-    } //End method
+    }
 
     public function ProjectEdit($id)
     {
@@ -53,20 +56,22 @@ class ProjectController extends Controller
     } //End method
     public function UpdateProject(Request $request)
     {
+        $project_id = $request->id;
 
-        $customer_id = $request->id;
+        // Remove commas and convert the cost to a numeric value
+        $cost = str_replace(",", "", $request->cost);
+        $cost = (float) $cost;
 
-        Project::findOrFail($customer_id)->update([
+        Project::findOrFail($project_id)->update([
             'name' => $request->name,
             'size' => $request->size,
-            'cost' => $request->cost,
+            'cost' => $cost,
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
-
         ]);
 
         $notification = array(
-            'message' => 'Project is updated successfuly without an image',
+            'message' => 'Project is updated successfully',
             'alert-type' => 'success'
         );
 

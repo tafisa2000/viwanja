@@ -30,22 +30,26 @@ class CategoryController extends Controller
 
     public function StoreProjectCategory(Request $request)
     {
+        // Remove commas and convert the price to a numeric value
+        $price = str_replace(",", "", $request->price);
+        $price = (float) $price;
+
         Category::insert([
             'name' => $request->name,
-            'price' => $request->price,
+            'price' => $price,
             'project_id' => $request->project_id,
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
-
         ]);
 
         $notification = array(
-            'message' => 'Project is inserted successfuly',
+            'message' => 'Project Category inserted successfully',
             'alert-type' => 'success'
         );
 
         return redirect()->route('all.category')->with($notification);
-    } //End method
+    }
+
 
     public function ProjectCategoriesEdit($id)
     {
@@ -63,8 +67,13 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::findOrFail($id);
+
+        // Remove commas from price and convert to a float
+        $price = str_replace(",", "", $request->price);
+        $price = (float) $price;
+
         $category->name = $request->name;
-        $category->price = $request->price;
+        $category->price = $price;
         $category->project_id = $request->project_id;
 
         $category->save();

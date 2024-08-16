@@ -223,6 +223,7 @@
                                             <option value="partial_paid">Partial Paid</option>
                                             <option value="full_due">Full Due</option>
                                         </select>
+                                        <br>
                                         <input name="paid_amount" class="hidden form-control paid_amount input-mask"
                                             id="input-currency"
                                             data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"

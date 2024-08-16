@@ -29,7 +29,9 @@
                                 <div class="row mb-3">
                                     <label for="example-text-input" class="col-sm-2 col-form-label">Amount</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" name="amount" type="number">
+                                        <input class="hidden form-control paid_amount input-mask" id="input-currency"
+                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'prefix': '', 'placeholder': '0'"
+                                            placeholder="Enter  Amount" name="amount">
                                     </div>
                                 </div>
                                 <div class="row mb-3">

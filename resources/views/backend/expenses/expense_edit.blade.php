@@ -22,6 +22,7 @@
                                             id="date" required>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <label for="details" class="col-sm-2 col-form-label">Expense Details</label>
                                     <div class="col-sm-10 form-group">
@@ -29,13 +30,15 @@
                                             value="{{ old('details', $expense->details) }}" required>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <label for="amount" class="col-sm-2 col-form-label">Amount</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" name="amount" type="number"
-                                            value="{{ old('amount', $expense->amount) }}" required>
+                                        <input class="form-control input-mask" name="amount" type="text"
+                                            value="{{ old('amount', number_format($expense->amount, 2)) }}" required>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <div class="form-group col-md-9">
                                         <label for="category_id">Category Name</label>
@@ -81,6 +84,17 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            // Apply input mask for the amount field
+            $('input[name="amount"]').inputmask({
+                alias: 'currency',
+                prefix: '',
+                groupSeparator: ',',
+                digits: 2,
+                autoGroup: true,
+                rightAlign: false,
+                removeMaskOnSubmit: true
+            });
+
             $('#myForm').validate({
                 rules: {
                     details: {

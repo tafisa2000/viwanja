@@ -9,7 +9,7 @@
                             <h4 class="card-title">Edit Project Category</h4><br><br>
                             <form method="POST" action="{{ route('projectCategory.update', $category->id) }}" id="myForm">
                                 @csrf
-                                @method('PUT') <!-- Laravel directive for PUT method -->
+                                @method('PUT')
 
                                 <div class="row mb-3">
                                     <label for="name" class="col-sm-2 col-form-label">Project Category Name</label>
@@ -18,13 +18,15 @@
                                             value="{{ old('name', $category->name) }}" required>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <label for="price" class="col-sm-2 col-form-label">Project Price (in sqm)</label>
                                     <div class="col-sm-10 form-group">
-                                        <input class="form-control" id="price" name="price" type="number"
-                                            value="{{ old('price', $category->price) }}" required>
+                                        <input class="form-control input-mask" id="price" name="price" type="text"
+                                            value="{{ old('price', number_format($category->price, 2)) }}" required>
                                     </div>
                                 </div>
+
                                 <div class="row mb-3">
                                     <div class="form-group col-md-9">
                                         <label for="project_id">Project Name</label>
@@ -32,7 +34,7 @@
                                             <option value="">Select Project</option>
                                             @foreach ($projects as $proj)
                                                 <option value="{{ $proj->id }}"
-                                                    {{ $category->project_id == $proj->id ? 'selected' : '' }}>
+                                                    {{ $proj->id == old('project_id', $category->project_id) ? 'selected' : '' }}>
                                                     {{ $proj->name }}
                                                 </option>
                                             @endforeach
@@ -50,10 +52,23 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            // Initialize InputMask for the price field
+            $('#price').inputmask({
+                alias: 'numeric',
+                groupSeparator: ',',
+                digits: 2,
+                digitsOptional: false,
+                prefix: '',
+                placeholder: '0',
+                rightAlign: false,
+                removeMaskOnSubmit: true // This will remove the mask when form is submitted
+            });
+
             $('#myForm').validate({
                 rules: {
                     name: {
                         required: true,
+                        maxlength: 255
                     },
                     price: {
                         required: true,
@@ -66,6 +81,7 @@
                 messages: {
                     name: {
                         required: 'Please enter the project category name',
+                        maxlength: 'The project category name cannot be longer than 255 characters'
                     },
                     price: {
                         required: 'Please enter the project price',
