@@ -246,7 +246,8 @@
 
 
                                     <div class="flex justify-end form-group">
-                                        <button type="submit" class="btn btn-dark btn-rounded waves-effect waves-light"
+                                        <button type="submit" id="submit"
+                                            class="btn btn-dark btn-rounded waves-effect waves-light"
                                             style="float:right">Add
                                             Invoice</button>
                                     </div>
@@ -394,6 +395,13 @@
                 var html = tamplate(data);
                 $('#addRow').prepend(html);
                 totalAmountPrice();
+            });
+
+
+
+            $(document).on('click', '#submit', function(event) {
+                $(this).disabled = true;
+                // totalAmountPrice();
             });
 
             $(document).on('click', '.removeeventmore', function(event) {
