@@ -7,7 +7,7 @@ services:
         restart: unless-stopped
         working_dir: /var/www
         volumes:
-            - /var/www/html/data/shule/public:/var/www/public
+            # - /var/www/html/data/shule/public:/var/www/public
             - /var/www/html/data/shule/storage:/var/www/storage
         networks:
             - laravel_network
@@ -33,7 +33,7 @@ services:
         ports:
             - "88:80"
         volumes:
-            - ./nginx:/var/www/nginx
+            # - ./nginx:/var/www/nginx
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - app
