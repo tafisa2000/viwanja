@@ -20,14 +20,13 @@ WORKDIR /var/www
 # Copy application files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-
 # Set file permissions
 RUN chown -R www-data:www-data /var/www
 
 RUN chmod -R 777 /var/www
 
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 RUN ls -al
 
 CMD ["php-fpm"]
