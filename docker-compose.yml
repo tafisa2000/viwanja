@@ -7,7 +7,7 @@ services:
         restart: unless-stopped
         working_dir: /var/www
         volumes:
-            - .:/var/www/public
+            - /var/www/html/data/shule:/var/www
         networks:
             - laravel_network
 
@@ -21,7 +21,7 @@ services:
             MYSQL_PASSWORD: secret
             MYSQL_ROOT_PASSWORD: rootsecret
         volumes:
-            - db_data:/var/lib/mysql
+            - /var/www/html/data/shule/db:/var/lib/mysql
         networks:
             - laravel_network
 
@@ -32,8 +32,8 @@ services:
         ports:
             - "88:80"
         volumes:
-            - .:/var/www
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - /var/www/html/data/shule:/var/www/nginx
+            - /var/www/html/data/shule/nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
             - app
         networks:
