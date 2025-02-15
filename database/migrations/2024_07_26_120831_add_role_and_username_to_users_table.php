@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Drop the existing role column
-            $table->dropColumn('role');
+            // $table->dropColumn('role');
             // Add other columns if they are not already in the table
             if (!Schema::hasColumn('users', 'username')) {
                 $table->string('username')->unique()->nullable();
