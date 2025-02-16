@@ -6,9 +6,9 @@ services:
         container_name: laravel_app
         restart: unless-stopped
         working_dir: /var/www
-        # volumes:
-        # - /var/www/html/data/shule/public:/var/www/public
-        # - /var/www/html/data/shule/storage:/var/www/storage
+        volumes:
+            - /var/www/html/data/shule/public:/var/www/public
+            - /var/www/html/data/shule/storage:/var/www/storage
         networks:
             - laravel_network
 
